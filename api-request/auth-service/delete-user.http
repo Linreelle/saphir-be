@@ -1,0 +1,4 @@
+###
+DELETE http://localhost:4004/users/44b48afb-caa9-4d24-9f2b-aa8ddcab5397
+Authorization: Bearer {{token}}
+###

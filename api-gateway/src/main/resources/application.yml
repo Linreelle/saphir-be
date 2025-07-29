@@ -1,0 +1,87 @@
+server:
+  port: 4003
+
+spring:
+  cloud:
+    gateway:
+      server:
+        webflux:
+          globalcors:
+            cors-configurations:
+              '[/**]':
+                allow-credentials: true
+                allowed-origins:
+                - "http://localhost:5173"
+                allowed-methods:
+                  - GET
+                  - POST
+                  - PUT
+                  - DELETE
+                  - PATCH
+                  - OPTIONS
+                allowed-headers: "*"
+
+          routes:
+              #Route to saphir
+            - id: saphir-auth-route
+              uri: http://saphir:4005
+              predicates:
+                - Path=/auth/**
+              filters:
+                - StripPrefix=1
+
+              # Route to offers
+            - id: saphir-offer-route
+              uri: http://saphir:4005
+              predicates:
+                - Path=/api/offers/**
+              filters:
+                - StripPrefix=1
+                - JwtValidation
+
+            - id: saphir-user-route
+              uri: http://saphir:4005
+              predicates:
+                - Path=/api/users/**
+              filters:
+                - StripPrefix=1
+                - JwtValidation
+
+            - id: saphir-bundle-route
+              uri: http://saphir:4005
+              predicates:
+                - Path=/api/bundles/**
+              filters:
+                - StripPrefix=1
+                - JwtValidation
+
+
+            - id: api-docs-saphir-route
+              uri: http://saphir:4005
+              predicates:
+                - Path=/api-docs/users
+              filters:
+                - RewritePath=/api-docs/users,/v3/api-docs
+
+
+            - id: api-docs-saphir-route
+              uri: http://saphir:4005
+              predicates:
+                - Path=/api-docs/auth
+              filters:
+                - RewritePath=/api-docs/auth,/v3/api-docs
+
+            - id: api-docs-saphir-route
+              uri: http://saphir:4005
+              predicates:
+                - Path=/api-docs/users
+              filters:
+                - RewritePath=/api-docs/users,/v3/api-docs
+
+
+
+
+
+
+
+

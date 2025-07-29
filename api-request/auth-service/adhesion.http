@@ -1,0 +1,16 @@
+PATCH  http://localhost:4004/users/adhesion/5d1d7a53-0e4a-4f22-aad9-5c4958a808c7
+Authorization: Bearer {{token}}
+content-Type: application/json
+
+
+{
+  "firstName": "managertest",
+  "lastName": "test",
+  "middleName": "test",
+  "email": "managerrole@test.com",
+  "telephone": "0698098131",
+  "identityMeans": "IDENTITY_CARD",
+  "idCardNumber": "1234567890",
+  "idCard": "",
+  "address": "Lemba Kin"
+}

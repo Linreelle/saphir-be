@@ -1,0 +1,8 @@
+###
+@token =eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiQURNSU4iLCJzdWIiOiJ0ZXN0MkBob3RtYWlsLmNvbSIsImlhdCI6MTc1Mzc4NDg1MywiZXhwIjoxNzUzODcxMjUzfQ.rpM98mTlHeVRimP3J5rEKalhrJJjTutTeJOTg_B3nTk
+GET  http://localhost:4003/api/offers
+Authorization: Bearer {{token}}
+
+
+
+###

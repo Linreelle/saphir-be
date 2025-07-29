@@ -1,0 +1,12 @@
+
+POST http://localhost:4003/auth/register
+content-type: application/json
+
+{
+  "firstName": "new",
+  "middleName": "test",
+  "lastName": "Linda",
+  "email": "test2@hotmail.com",
+  "telephone": "0998798131",
+  "password": "Password@98"
+}

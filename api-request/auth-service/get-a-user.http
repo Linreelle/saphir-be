@@ -1,0 +1,5 @@
+### GET request to example server
+GET http://localhost:4004/users/criteria/5d1d7a53-0e4a-4f22-aad9-5c4958a808c7
+Authorization: Bearer {{token}}
+
+###

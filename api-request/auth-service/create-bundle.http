@@ -1,0 +1,30 @@
+### GET request to example server
+@token =eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiQURNSU4iLCJzdWIiOiJ0ZXN0MkBob3RtYWlsLmNvbSIsImlhdCI6MTc1Mzc0NzUwMCwiZXhwIjoxNzUzODMzOTAwfQ.cgwa_bjT0PQfRAI39GwCgGfBDZSJnzVLqe4jZN5ZP6M
+POST localhost:4003/api/bundles
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "name":"Ponctuel A ",
+  "description": "Here is the description",
+  "offers": [
+    {
+      "name":"Coiffure Homme",
+      "description": "Offer description",
+      "isActive": true
+    },
+    {
+      "name":"Maquillage et coiffure Femme",
+      "description": "Offer description",
+      "isActive": true
+    },
+    {
+      "name":"Coiffure enfant",
+      "description": "Offer description",
+      "isActive": true
+    }
+    
+  ]
+}
+
+###

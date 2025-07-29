@@ -1,0 +1,9 @@
+POST http://localhost:4003/auth/login
+Content-Type: application/json
+
+{
+  "email":"linreelle@mail.com",
+  "password": "Password@98"
+}
+
+> {% client.global.set("token", response.body.access_token) %}

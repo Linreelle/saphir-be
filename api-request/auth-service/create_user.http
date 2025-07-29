@@ -1,0 +1,20 @@
+###
+POST http://localhost:4004/users
+Authorization: Bearer {{token}}
+content-type: application/json
+
+{
+  "firstName": "managertest",
+  "middleName": "",
+  "lastName": "test",
+  "email": "managerrole1@test.com",
+  "telephone": "0598098131",
+  "password": "password1234",
+  "confirmPassword": "password123",
+  "role": ""
+
+}
+
+
+
+###

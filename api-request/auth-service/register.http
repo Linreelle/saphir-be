@@ -1,0 +1,13 @@
+### GET request to example server
+POST http://localhost:4004/auth/register
+content-type: application/json
+
+{
+  "firstName": "new",
+  "middleName": "test",
+  "lastName": "Linda",
+  "email": "linreelle@hotmail.com",
+  "telephone": "0998098131",
+  "password": "Password@98"
+}
+###

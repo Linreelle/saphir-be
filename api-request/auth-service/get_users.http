@@ -1,0 +1,5 @@
+###
+@token =eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiQURNSU4iLCJzdWIiOiJ0ZXN0MkBob3RtYWlsLmNvbSIsImlhdCI6MTc1Mzc0NzUwMCwiZXhwIjoxNzUzODMzOTAwfQ.cgwa_bjT0PQfRAI39GwCgGfBDZSJnzVLqe4jZN5ZP6M
+GET http://localhost:4003/api/bundles/1
+Authorization: Bearer {{token}}
+###
