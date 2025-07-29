@@ -4,6 +4,8 @@ import com.linreelle.saphir.dto.ChangeProfileDto;
 import com.linreelle.saphir.dto.ProfileDto;
 import com.linreelle.saphir.model.User;
 
+import java.io.IOException;
+
 public class ProfileMapper {
     public static ProfileDto toDTO(User user){
         ProfileDto response = new ProfileDto();
@@ -19,7 +21,7 @@ public class ProfileMapper {
 
         return response;
     }
-    public static User toModel (ChangeProfileDto request){
+    public static User toModel (ChangeProfileDto request) throws IOException {
         User user = new User();
 
         user.setFirstName(request.getFirstName());
@@ -28,7 +30,7 @@ public class ProfileMapper {
         user.setTelephone(request.getTelephone());
         user.setDateOfBirth(request.getDateOfBirth());
         user.setAddress(request.getAddress());
-        user.setPp(request.getPp());
+        user.setPp(request.getPp().getBytes());
 
         return user;
     }
