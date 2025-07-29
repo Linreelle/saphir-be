@@ -1,0 +1,8 @@
+[build]
+builder = "heroku/jvm"
+
+[variables]
+JAVA_VERSION = "17"
+
+[start]
+cmd = "java -jar target/api-gateway-0.0.1-SNAPSHOT.jar"
