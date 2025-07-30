@@ -19,6 +19,10 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import lombok.extern.slf4j.Slf4j;
+
+
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class OfferService {
@@ -31,6 +35,7 @@ public class OfferService {
 
 
     public List<OfferResponseDTO> getOffers(){
+        log.debug("Calling offerService.getOffers");
         List<Offer> offers = offerRepository.findByIsActiveTrue();
         return offers.stream().map(OfferMapper::toDTO).toList();
     }
