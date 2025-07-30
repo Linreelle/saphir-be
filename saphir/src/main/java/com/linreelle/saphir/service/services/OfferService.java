@@ -33,9 +33,10 @@ public class OfferService {
 //    private final BillingServiceGrpcClient billingServiceGrpcClient;
 //    private  final KafkaProducer kafkaProducer;
 
-
+log.debug("Calling offerService.getOffers");
     public List<OfferResponseDTO> getOffers(){
-        log.debug("Calling offerService.getOffers");
+        
+        log.debug("Fetching offers from repository");
         List<Offer> offers = offerRepository.findByIsActiveTrue();
         return offers.stream().map(OfferMapper::toDTO).toList();
     }
