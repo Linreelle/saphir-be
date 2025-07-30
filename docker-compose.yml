@@ -43,7 +43,7 @@ services:
     image: api-gateway:latest
     container_name: api-gateway
     environment:
-      SAPHIR_URL: http://saphir:4005
+      SAPHIR_URL: "http://saphir:4005"
     ports:
       - "4003:4003"
     networks:
