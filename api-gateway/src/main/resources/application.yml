@@ -11,7 +11,7 @@ spring:
               '[/**]':
                 allow-credentials: true
                 allowed-origins:
-                - "http://localhost:5173"
+                - "https://linreelle.github.io"
                 allowed-methods:
                   - GET
                   - POST
