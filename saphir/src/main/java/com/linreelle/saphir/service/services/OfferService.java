@@ -30,10 +30,6 @@ public class OfferService {
     private final SubscriptionRepository subscriptionRepository;
     private final UserRepository userRepository;
 
-//    private final BillingServiceGrpcClient billingServiceGrpcClient;
-//    private  final KafkaProducer kafkaProducer;
-
-log.debug("Calling offerService.getOffers");
     public List<OfferResponseDTO> getOffers(){
         
         log.debug("Fetching offers from repository");
