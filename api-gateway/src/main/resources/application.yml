@@ -1,6 +1,6 @@
 server:
   port: 4003
-
+  address: 0.0.0.0
 spring:
   cloud:
     gateway:
@@ -24,7 +24,7 @@ spring:
           routes:
               #Route to saphir
             - id: saphir-auth-route
-              uri: http://saphir:4005
+              uri: https://saphir.up.railway.app
               predicates:
                 - Path=/auth/**
               filters:
@@ -57,7 +57,7 @@ spring:
 
 
             - id: api-docs-saphir-route
-              uri: http://saphir:4005
+              uri: https://saphir.up.railway.app
               predicates:
                 - Path=/api-docs/users
               filters:
@@ -65,14 +65,14 @@ spring:
 
 
             - id: api-docs-saphir-route
-              uri: http://saphir:4005
+              uri: https://saphir.up.railway.app
               predicates:
                 - Path=/api-docs/auth
               filters:
                 - RewritePath=/api-docs/auth,/v3/api-docs
 
             - id: api-docs-saphir-route
-              uri: http://saphir:4005
+              uri: https://saphir.up.railway.app
               predicates:
                 - Path=/api-docs/users
               filters:
