@@ -24,7 +24,7 @@ spring:
           routes:
               #Route to saphir
             - id: saphir-auth-route
-              uri: https://saphir.up.railway.app
+              uri: http://saphir:4005
               predicates:
                 - Path=/auth/**
               filters:
