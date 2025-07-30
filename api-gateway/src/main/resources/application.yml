@@ -32,7 +32,7 @@ spring:
 
               # Route to offers
             - id: saphir-offer-route
-              uri: https://saphir.up.railway.app
+              uri: http://saphir:4005
               predicates:
                 - Path=/api/offers/**
               filters:
@@ -40,7 +40,7 @@ spring:
                 - JwtValidation
 
             - id: saphir-user-route
-              uri: https://saphir.up.railway.app
+              uri: http://saphir:4005
               predicates:
                 - Path=/api/users/**
               filters:
@@ -48,7 +48,7 @@ spring:
                 - JwtValidation
 
             - id: saphir-bundle-route
-              uri: https://saphir.up.railway.app
+              uri: http://saphir:4005
               predicates:
                 - Path=/api/bundles/**
               filters:
@@ -57,7 +57,7 @@ spring:
 
 
             - id: api-docs-saphir-users-route
-              uri: https://saphir.up.railway.app
+              uri: http://saphir:4005
               predicates:
                 - Path=/api-docs/users
               filters:
@@ -65,14 +65,14 @@ spring:
 
 
             - id: api-docs-saphir-auth-route
-              uri: https://saphir.up.railway.app
+              uri: http://saphir:4005
               predicates:
                 - Path=/api-docs/auth
               filters:
                 - RewritePath=/api-docs/auth,/v3/api-docs
 
             - id: api-docs-saphir=offers-route
-              uri: https://saphir.up.railway.app
+              uri: http://saphir:4005
               predicates:
                 - Path=/api-docs/offers
               filters:
