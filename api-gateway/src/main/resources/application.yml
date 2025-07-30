@@ -56,7 +56,7 @@ spring:
                 - JwtValidation
 
 
-            - id: api-docs-saphir-route
+            - id: api-docs-saphir-users-route
               uri: https://saphir.up.railway.app
               predicates:
                 - Path=/api-docs/users
@@ -64,19 +64,19 @@ spring:
                 - RewritePath=/api-docs/users,/v3/api-docs
 
 
-            - id: api-docs-saphir-route
+            - id: api-docs-saphir-auth-route
               uri: https://saphir.up.railway.app
               predicates:
                 - Path=/api-docs/auth
               filters:
                 - RewritePath=/api-docs/auth,/v3/api-docs
 
-            - id: api-docs-saphir-route
+            - id: api-docs-saphir=offers-route
               uri: https://saphir.up.railway.app
               predicates:
-                - Path=/api-docs/users
+                - Path=/api-docs/offers
               filters:
-                - RewritePath=/api-docs/users,/v3/api-docs
+                - RewritePath=/api-docs/offers,/v3/api-docs
 
 
 
