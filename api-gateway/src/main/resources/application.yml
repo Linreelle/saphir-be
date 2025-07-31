@@ -40,7 +40,7 @@ spring:
                 - JwtValidation
 
             - id: saphir-user-route
-              uri: http://saphir-be-production.up.railway.app
+              uri: http://saphir.railway.internal
               predicates:
                 - Path=/api/users/**
               filters:
