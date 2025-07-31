@@ -47,6 +47,7 @@ public class AuthService {
         Confirmation confirmation = confirmationRepository.findByToken(token);
         User user = userRepository.findByEmailIgnoreCase(confirmation.getUser().getEmail());
         user.setEnabled(true);
+        user.setActive(true);
         userRepository.save(user);
         //confirmationRepository.delete(confirmation);
         return Boolean.TRUE;
