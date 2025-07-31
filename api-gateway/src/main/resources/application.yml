@@ -37,7 +37,7 @@ spring:
                 - Path=/api/offers/**
               filters:
                 - StripPrefix=1
-                - JwtValidation
+                
 
             - id: saphir-user-route
               uri: http://saphir-be-production.up.railway.app
