@@ -8,6 +8,10 @@ public class EmailUtils {
     }
 
     public static String getVerificationUrl(String host, String token) {
-        return host + "/auth/register?token=" + token;
+    if (!host.endsWith("/#")) {
+        host = host.endsWith("/") ? host + "#" : host + "/#";
     }
+    return host + "/verification?token=" + token;
+}
+
 }
