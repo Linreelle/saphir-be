@@ -36,6 +36,15 @@ spring:
               filters:
                 - StripPrefix=1
 
+              #Route to log out
+            - id: saphir-auth-logout
+              uri: http://saphir:4005
+              predicates:
+                - Path=/api/logout
+              filters:
+                - StripPrefix=1
+
+
               # Route to offers
             - id: saphir-offer-route
               uri: http://saphir:4005
