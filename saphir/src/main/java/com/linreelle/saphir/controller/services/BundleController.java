@@ -15,7 +15,15 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-
+@CrossOrigin(origins = "https://api-gateway-service.railway.internal", methods = {
+        RequestMethod.GET,
+        RequestMethod.POST,
+        RequestMethod.PUT,
+        RequestMethod.DELETE,
+        RequestMethod.OPTIONS,
+        RequestMethod.PATCH,
+        RequestMethod.HEAD
+})
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/bundles")

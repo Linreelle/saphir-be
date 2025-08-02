@@ -27,12 +27,20 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
-@CrossOrigin(origins = "https://linreelle.github.io", allowCredentials = "true")
 
 @Slf4j
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/users")
+@CrossOrigin(origins = "https://api-gateway-service.railway.internal", methods = {
+        RequestMethod.GET,
+        RequestMethod.POST,
+        RequestMethod.PUT,
+        RequestMethod.DELETE,
+        RequestMethod.OPTIONS,
+        RequestMethod.PATCH,
+        RequestMethod.HEAD
+})
 public class UserController {
     private final UserService userService;
     private final UserRepository userRepository;
