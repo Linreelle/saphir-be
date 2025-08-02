@@ -1,5 +1,7 @@
 package com.linreelle.saphir.configuration;
 
+import com.linreelle.saphir.service.LogoutService;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,10 +26,17 @@ import static com.linreelle.saphir.model.Role.*;
 public class SecurityConfig {
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final AuthenticationProvider authenticationProvider;
+    private final LogoutService logoutService;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+                .logout(logout -> logout
+                        .logoutUrl("/logout")
+                        .addLogoutHandler(logoutService)  // Inject your service here
+                        .logoutSuccessHandler((request, response, authentication) ->
+                                response.setStatus(HttpServletResponse.SC_OK)
+                        ))
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(Customizer.withDefaults())
                 .authorizeHttpRequests(
@@ -35,7 +44,7 @@ public class SecurityConfig {
                                 auth
                                         .requestMatchers("/login", "/register", "/error", "/").permitAll()
 
-                                        .requestMatchers("/logout").hasAnyRole(ADMIN.name(), MANAGER.name(), USER.name())
+                                        .requestMatchers("/logout").permitAll()
                                         .requestMatchers(HttpMethod.POST, "/logout").hasAnyAuthority(ADMIN_READ.name(), MANAGER_READ.name(), USER.name())
 
                                         .requestMatchers("/users/**").hasAnyRole(ADMIN.name(), MANAGER.name(), USER.name())
