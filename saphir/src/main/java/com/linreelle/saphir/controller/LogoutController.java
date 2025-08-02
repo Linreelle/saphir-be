@@ -12,18 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/logout")
-@CrossOrigin(origins = {
-        "https://api-gateway-service.railway.internal",
-        "https://linreelle.github.io"
-}, methods = {
-        RequestMethod.GET,
-        RequestMethod.POST,
-        RequestMethod.PUT,
-        RequestMethod.DELETE,
-        RequestMethod.OPTIONS,
-        RequestMethod.PATCH,
-        RequestMethod.HEAD
-})
+
 public class LogoutController {
     private final LogoutService logoutService;
 
