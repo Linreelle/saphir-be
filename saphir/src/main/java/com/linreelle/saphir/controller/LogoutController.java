@@ -12,7 +12,10 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/logout")
-@CrossOrigin(origins = "https://api-gateway-service.railway.internal", methods = {
+@CrossOrigin(origins = {
+        "https://api-gateway-service.railway.internal",
+        "https://linreelle.github.io"
+}, methods = {
         RequestMethod.GET,
         RequestMethod.POST,
         RequestMethod.PUT,

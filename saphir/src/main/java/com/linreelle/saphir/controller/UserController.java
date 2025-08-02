@@ -32,7 +32,10 @@ import java.util.UUID;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/users")
-@CrossOrigin(origins = "https://api-gateway-service.railway.internal", methods = {
+@CrossOrigin(origins = {
+        "https://api-gateway-service.railway.internal",
+        "https://linreelle.github.io"
+}, methods = {
         RequestMethod.GET,
         RequestMethod.POST,
         RequestMethod.PUT,

@@ -14,7 +14,9 @@
              public void addCorsMappings (CorsRegistry registry) {
                 WebMvcConfigurer.super.addCorsMappings(registry);
                 registry.addMapping("/**")
-                        .allowedOrigins("https://api-gateway-service.railway.internal")
+                        .allowedOrigins("https://api-gateway-service.railway.internal",
+                                "https://linreelle.github.io"
+                                )
                         .allowedMethods("GET",  "POST", "PUT", "DELETE", "OPTIONS", "PATCH")
                         .allowCredentials(true)
                         .allowedHeaders("*");
