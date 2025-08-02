@@ -47,19 +47,5 @@ public class ApplicationConfiguration {
         return new BCryptPasswordEncoder();
     }
 
-    @Bean
-public CorsWebFilter corsFilter() {
-    CorsConfiguration config = new CorsConfiguration();
-    config.setAllowedOrigins(Arrays.asList("https://linreelle.github.io"));
-    config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-    config.setAllowedHeaders(Arrays.asList("*"));
-    config.setAllowCredentials(true);
-
-    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-    source.registerCorsConfiguration("/**", config);
-
-    return new CorsWebFilter(source);
-}
-
 }
 
