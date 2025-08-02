@@ -17,18 +17,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.UUID;
 
-@CrossOrigin(origins = {
-        "https://api-gateway-service.railway.internal",
-        "https://linreelle.github.io"
-}, methods = {
-        RequestMethod.GET,
-        RequestMethod.POST,
-        RequestMethod.PUT,
-        RequestMethod.DELETE,
-        RequestMethod.OPTIONS,
-        RequestMethod.PATCH,
-        RequestMethod.HEAD
-})
 @RestController
 @RequiredArgsConstructor
 @Slf4j

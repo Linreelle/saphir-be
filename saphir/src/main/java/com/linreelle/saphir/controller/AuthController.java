@@ -23,18 +23,6 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@CrossOrigin(origins = {
-        "https://api-gateway-service.railway.internal",
-        "https://linreelle.github.io"
-}, methods = {
-        RequestMethod.GET,
-        RequestMethod.POST,
-        RequestMethod.PUT,
-        RequestMethod.DELETE,
-        RequestMethod.OPTIONS,
-        RequestMethod.PATCH,
-        RequestMethod.HEAD
-})
 public class AuthController {
     private final AuthService authService;
 

@@ -32,18 +32,6 @@ import java.util.UUID;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/users")
-@CrossOrigin(origins = {
-        "https://api-gateway-service.railway.internal",
-        "https://linreelle.github.io"
-}, methods = {
-        RequestMethod.GET,
-        RequestMethod.POST,
-        RequestMethod.PUT,
-        RequestMethod.DELETE,
-        RequestMethod.OPTIONS,
-        RequestMethod.PATCH,
-        RequestMethod.HEAD
-})
 public class UserController {
     private final UserService userService;
     private final UserRepository userRepository;
