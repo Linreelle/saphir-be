@@ -1,3 +1,4 @@
+
 package com.linreelle.saphir.service;
 
 import com.linreelle.saphir.repository.TokenRepository;
