@@ -44,7 +44,7 @@ public class SecurityConfig {
                                 auth
                                         .requestMatchers("/login", "/register", "/error", "/").permitAll()
 
-                                        .requestMatchers("/logout").permitAll()
+                                        .requestMatchers("/logout").authenticated()
                                         .requestMatchers(HttpMethod.POST, "/logout").hasAnyAuthority(ADMIN_READ.name(), MANAGER_READ.name(), USER.name())
 
                                         .requestMatchers("/users/**").hasAnyRole(ADMIN.name(), MANAGER.name(), USER.name())

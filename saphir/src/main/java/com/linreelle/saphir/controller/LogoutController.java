@@ -21,7 +21,7 @@ public class LogoutController {
                                     HttpServletResponse response,
                                     Authentication authentication) {
 
-        System.out.println("Logout URL: /logoutUrl ");
+        System.out.println("Logout URL: /logoutUrl ") ;
         logoutService.logout(request, response, authentication);
         return ResponseEntity.ok("Logout successful.");
     }

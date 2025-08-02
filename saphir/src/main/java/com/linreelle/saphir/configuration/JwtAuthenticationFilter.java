@@ -36,8 +36,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                                     @NonNull FilterChain filterChain) throws ServletException, IOException {
         log.info("Request URI: {}", request.getRequestURI());
 
-        if (request.getServletPath().contains("/api/v1/auth")){
+        if (request.getServletPath().contains("/api/v1/auth") &&
+                !request.getServletPath().contains("/logout")){
             filterChain.doFilter(request, response);
+            System.out.println("JWT filter running on: " + request.getRequestURI());
+            System.out.println("Authentication: " + SecurityContextHolder.getContext().getAuthentication());
             return;
         }
         final String authHeader = request.getHeader("Authorization");
