@@ -7,7 +7,6 @@ import com.linreelle.saphir.model.services.Offer;
 public class OfferMapper {
     public static OfferResponseDTO toDTO(Offer offer){
         OfferResponseDTO offerResponseDTO = new OfferResponseDTO();
-
         offerResponseDTO.setId(offer.getId().toString());
         offerResponseDTO.setName(offer.getName());
         offerResponseDTO.setDescription(offer.getDescription());
