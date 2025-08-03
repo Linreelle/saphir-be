@@ -6,7 +6,7 @@ logging:
 
 server:
   port: 4003
-  address: ::
+
 spring:
   cloud:
     gateway:
