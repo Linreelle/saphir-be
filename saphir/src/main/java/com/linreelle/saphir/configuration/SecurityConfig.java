@@ -59,6 +59,7 @@ public class SecurityConfig {
 
                                         .requestMatchers("/offers/**").hasAnyRole(ADMIN.name(), MANAGER.name(), USER.name())
                                         .requestMatchers(HttpMethod.GET, "/offers/dummy").hasAnyAuthority(ADMIN_READ.name(), MANAGER_READ.name(), USER_READ.name())
+                                        .requestMatchers(HttpMethod.GET, "/offers/all").hasAuthority(ADMIN_CREATE.name())
                                         .requestMatchers(HttpMethod.GET, "/offers").hasAnyAuthority(ADMIN_READ.name(), MANAGER_READ.name(), USER_READ.name())
                                         .requestMatchers(HttpMethod.GET, "/offers/**").hasAnyAuthority(ADMIN_READ.name(), MANAGER_READ.name(), USER_READ.name())
                                         .requestMatchers(HttpMethod.POST, "/offers").hasAnyAuthority(ADMIN_CREATE.name(), MANAGER_READ.name())
