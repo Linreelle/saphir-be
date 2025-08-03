@@ -29,8 +29,6 @@ public class UserRequest {
 
     @NotBlank(message = "Address is required")
     private String address;
-
-    @NotBlank(message = "Date of birth is required")
     private LocalDate dateOfBirth;
 
     private String title;
