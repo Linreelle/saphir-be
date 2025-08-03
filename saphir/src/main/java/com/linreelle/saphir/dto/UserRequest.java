@@ -1,6 +1,5 @@
 package com.linreelle.saphir.dto;
 
-import com.linreelle.saphir.dto.validators.CreateUserValidationGroup;
 import com.linreelle.saphir.model.Role;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

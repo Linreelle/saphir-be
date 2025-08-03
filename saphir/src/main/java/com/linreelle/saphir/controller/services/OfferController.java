@@ -1,18 +1,23 @@
 package com.linreelle.saphir.controller.services;
 
+import com.linreelle.saphir.dto.EmployeeResponseDto;
 import com.linreelle.saphir.dto.services.OfferRequestDTO;
 import com.linreelle.saphir.dto.services.OfferResponseDTO;
 import com.linreelle.saphir.dto.validators.CreateOfferValidationGroup;
 import com.linreelle.saphir.model.services.Subscription;
 import com.linreelle.saphir.service.services.OfferService;
 import io.swagger.v3.oas.annotations.Operation;
+import jakarta.annotation.PostConstruct;
 import jakarta.validation.groups.Default;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.catalina.core.ApplicationContext;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
 import java.util.List;
 import java.util.UUID;
@@ -24,16 +29,15 @@ import java.util.UUID;
 public class OfferController {
     private final OfferService offerService;
 
-//    @GetMapping
-//    @Operation(summary = "Get offers")
-//    public ResponseEntity<?> getOffers(){
-//        log.debug("Start getOffers()");
-//        List<OfferResponseDTO> offers = offerService.getOffers();
-//        log.debug("Successfully mapped {} offers", offers.size());
-//        return ResponseEntity.ok(offers);
-//    }
+    @PreAuthorize("hasAnyRole('ADMIN','USER', 'MANAGER')")
+    @GetMapping("/all")
+    @Operation(summary = "Get offers")
+    public ResponseEntity<List<OfferResponseDTO>> getOffers(){
+        List<OfferResponseDTO> offers = offerService.getOffers();
+        return ResponseEntity.ok(offers);
+    }
 
-    @GetMapping
+    @GetMapping("/dummy")
     public ResponseEntity<?> debugOffers() {
         OfferResponseDTO dummy = new OfferResponseDTO();
         dummy.setId("1");
