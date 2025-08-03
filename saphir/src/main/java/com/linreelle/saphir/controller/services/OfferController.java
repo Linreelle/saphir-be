@@ -62,6 +62,7 @@ public class OfferController {
     @Operation(summary = "Create a new offer")
     public ResponseEntity<OfferResponseDTO> createOffer(
             @Validated({Default.class, CreateOfferValidationGroup.class}) @RequestBody OfferRequestDTO offerRequestDTO){
+        System.out.println("Received Offer: " + offerRequestDTO);
 
         OfferResponseDTO offerResponseDTO = offerService.createOffer(offerRequestDTO);
         return ResponseEntity.ok().body(offerResponseDTO);
