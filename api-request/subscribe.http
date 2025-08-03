@@ -1,4 +1,5 @@
 ###
-GET http://localhost:4005/users
+@token = eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiQURNSU4iLCJzdWIiOiJ0ZXN0MUBob3RtYWlsLmNvbSIsImlhdCI6MTc1NDIyMDYyMywiZXhwIjoxNzU0MzA3MDIzfQ.-EkYwXyxw1jttfGGgObbw0K7PbRAN_uexrD99l1f_cE
+GET http://localhost:4003/api/users
 Authorization: Bearer {{token}}
 ###
