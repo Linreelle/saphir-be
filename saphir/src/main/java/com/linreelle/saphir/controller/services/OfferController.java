@@ -38,12 +38,14 @@ public class OfferController {
     }
 
     @GetMapping("/dummy")
-    public ResponseEntity<?> debugOffers() {
-        OfferResponseDTO dummy = new OfferResponseDTO();
-        dummy.setId("1");
-        dummy.setName("Test");
-        dummy.setDescription("Dummy offer");
-        return ResponseEntity.ok(List.of(dummy));
+    public ResponseEntity<String> debugOffers() {
+        return ResponseEntity.ok("Dummy endpoint working");
+    }
+
+    @GetMapping("/healthcheck")
+    public ResponseEntity<String> healthCheck() {
+        log.info("Health check endpoint called");  // check if this appears in Railway logs
+        return ResponseEntity.ok("OK");
     }
 
     @PostMapping("/{offer_id}/subscribe")
