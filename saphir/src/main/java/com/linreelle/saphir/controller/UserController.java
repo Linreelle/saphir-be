@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.ui.ModelMap;
@@ -31,6 +32,7 @@ import java.util.UUID;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
+@EnableMethodSecurity
 @RequestMapping("/users")
 public class UserController {
     private final UserService userService;
@@ -102,6 +104,7 @@ public class UserController {
 
     @PostMapping
     @Operation(summary = "Create a new user")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<UserResponse> createUser(
             @Validated({Default.class, CreateUserValidationGroup.class})
             @RequestBody UserRequest request,
