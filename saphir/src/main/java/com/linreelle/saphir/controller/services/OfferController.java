@@ -24,13 +24,22 @@ import java.util.UUID;
 public class OfferController {
     private final OfferService offerService;
 
+//    @GetMapping
+//    @Operation(summary = "Get offers")
+//    public ResponseEntity<?> getOffers(){
+//        log.debug("Start getOffers()");
+//        List<OfferResponseDTO> offers = offerService.getOffers();
+//        log.debug("Successfully mapped {} offers", offers.size());
+//        return ResponseEntity.ok(offers);
+//    }
+
     @GetMapping
-    @Operation(summary = "Get offers")
-    public ResponseEntity<?> getOffers(){
-        log.debug("Start getOffers()");
-        List<OfferResponseDTO> offers = offerService.getOffers();
-        log.debug("Successfully mapped {} offers", offers.size());
-        return ResponseEntity.ok(offers);
+    public ResponseEntity<?> debugOffers() {
+        OfferResponseDTO dummy = new OfferResponseDTO();
+        dummy.setId("1");
+        dummy.setName("Test");
+        dummy.setDescription("Dummy offer");
+        return ResponseEntity.ok(List.of(dummy));
     }
 
     @PostMapping("/{offer_id}/subscribe")

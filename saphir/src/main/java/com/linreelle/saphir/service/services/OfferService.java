@@ -13,6 +13,7 @@ import com.linreelle.saphir.repository.UserRepository;
 import com.linreelle.saphir.repository.services.OfferRepository;
 import com.linreelle.saphir.repository.services.SubscriptionRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,6 +21,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.GetMapping;
 
 
 @Slf4j
@@ -40,6 +42,8 @@ public class OfferService {
 
         return offers.stream().map(OfferMapper::toDTO).toList();
     }
+
+
     public void subscribeUserToOffer(UUID userId, Integer offerId) {
         Optional<User> user = userRepository.findById(userId);
         Offer offer = offerRepository.findById(offerId)
