@@ -31,13 +31,15 @@ public class User implements UserDetails {
     private String lastName;
     @Column
     private String middleName;
-    @Column(unique = true, nullable = false)
+    @Column
+    private String title;
     @Email
     private String email;
     @Column(unique = true)
     private String telephone;
     @Column(nullable = false)
     private String password;
+    private String createdBy;
     @Column
     private String confirmPassword;
 
@@ -71,7 +73,7 @@ public class User implements UserDetails {
 
     private boolean active = true;
     private boolean enabled = false;
-
+    private boolean isUser = false;
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return role.getauthorities();
@@ -120,6 +122,9 @@ public class User implements UserDetails {
         }
         if (profile == null) {
             profile = firstName + " " + lastName;
+        }
+        if (createdBy == null) {
+            createdBy = firstName + " " + lastName;
         }
     }
 }

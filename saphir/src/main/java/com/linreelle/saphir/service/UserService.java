@@ -16,6 +16,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.ModelMap;
 
@@ -24,12 +25,14 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
     private final UserDao userDao;
+    private final PasswordEncoder passwordEncoder;
 
     private String getLoggedInUserName(ModelMap modelMap){
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -59,11 +62,14 @@ public class UserService implements UserDetailsService {
         return userRepository.save(user);
     }
 
-    public List<UserResponse> getUsers(){
-        List<User> users = userRepository.findAll();
-        return users.stream().map(UserMapper::toDTO).toList();
+    public List<UserResponse> getCustomers(){
+        List<User> customers = userRepository.findAll();
+        return customers.stream().map(UserMapper::toDTO).toList();
     }
-
+    public List<EmployeeResponseDto> getUsers(){
+        List<User> users = userRepository.findByIsUserTrue();
+        return users.stream().map(UserMapper::toEmployeeDTO).toList();
+    }
     public UserResponse getAUser(UUID id){
         User user = userRepository.findById(id).orElseThrow(
                 ()-> new UserNotFindException("User not find with ID:" +id));
@@ -71,7 +77,8 @@ public class UserService implements UserDetailsService {
         return UserMapper.toDTO(user);
     }
 
-    public UserResponse createUser (UserRequest request){
+    public UserResponse createUser (UserRequest request, ModelMap modelMap) {
+
         if (userRepository.existsByEmail(request.getEmail())){
             throw new EmailAlreadyExistsException("A User with this email already exists"
                     + request.getEmail());
@@ -80,10 +87,25 @@ public class UserService implements UserDetailsService {
             throw new TelephoneAlreadyExistException("A User with this telephone number already exists"
                     + request.getTelephone());
         }
-        User newCustomer = userRepository.save(
-                UserMapper.toModel(request));
+        String name = getLoggedInUserName(modelMap);
 
-        return UserMapper.toDTO(newCustomer);
+        User newUser = User.builder()
+                .createdBy(name)
+                .isUser(true)
+                .email(request.getEmail())
+                .firstName(request.getFirstName())
+                .middleName(request.getMiddleName())
+                .lastName(request.getLastName())
+                .telephone(request.getTelephone())
+                .password(passwordEncoder.encode(request.getPassword()))
+                .registeredDate(LocalDate.now())
+                .title(request.getTitle())
+                .address(request.getAddress())
+                .dateOfBirth(request.getDateOfBirth())
+                .role(request.getRole())
+                .build();
+                userRepository.save(newUser);
+        return UserMapper.toDTO(newUser);
     }
     public AdhesionResponse adhesion (UUID id, AdhesionRequest request){
         User user = userRepository.findById(id)

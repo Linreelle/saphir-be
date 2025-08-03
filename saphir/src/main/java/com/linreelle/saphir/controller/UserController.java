@@ -56,11 +56,19 @@ public class UserController {
 
 
     @GetMapping
-    @Operation(summary = "Get users")
+    @Operation(summary = "Get Customers")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<List<UserResponse>> getUsers(){
-            List<UserResponse> users = userService.getUsers();
-            return ResponseEntity.ok().body(users);
+    public ResponseEntity<List<UserResponse>> getCustomers(){
+            List<UserResponse> customers = userService.getCustomers();
+            return ResponseEntity.ok().body(customers);
+      }
+
+      @GetMapping("/systemUsers")
+      @Operation(summary = "Get users")
+      @PreAuthorize("hasRole('ADMIN')")
+      public ResponseEntity<List<EmployeeResponseDto>> getUsers(){
+        List<EmployeeResponseDto> users = userService.getUsers();
+        return ResponseEntity.ok().body(users);
       }
 //    @GetMapping
 //    public ResponseEntity<?> getAllUsers( ModelMap modelMap) {
@@ -96,10 +104,10 @@ public class UserController {
     @Operation(summary = "Create a new user")
     public ResponseEntity<UserResponse> createUser(
             @Validated({Default.class, CreateUserValidationGroup.class})
-            @RequestBody UserRequest request){
+            @RequestBody UserRequest request,
+            ModelMap modelMap) {
 
-        UserResponse userResponseDTO = userService.createUser(
-                request);
+        UserResponse userResponseDTO = userService.createUser(request, modelMap);
 
         return ResponseEntity.ok().body(userResponseDTO);
     }

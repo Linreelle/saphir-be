@@ -14,7 +14,7 @@ public class UserRequest {
     @NotBlank(message = "Firstname is required")
     @Size(max = 100, message = "Name cannot exceed 100 characters")
     private String firstName;
-
+    private String middleName;
     @NotBlank(message = "Lastname is required")
     @Size(max = 100, message = "Name cannot exceed 100 characters")
     private String lastName;
@@ -22,8 +22,6 @@ public class UserRequest {
     @NotBlank(message = "Password is required")
     @Size(min = 8)
     private String password;
-
-    private String confirmPassword;
 
     @NotBlank(message = "Email is required")
     @Email(message = "Email should be valid")
@@ -35,8 +33,7 @@ public class UserRequest {
     @NotBlank(message = "Date of birth is required")
     private LocalDate dateOfBirth;
 
-    @NotBlank(groups = CreateUserValidationGroup.class, message = "Registered date is required")
-    private LocalDate registeredDate;
+    private String title;
 
     @NotBlank(message = "Telephone number is required")
     @Size(max = 10, message = "Telephone number cannot exceed 10 characters")

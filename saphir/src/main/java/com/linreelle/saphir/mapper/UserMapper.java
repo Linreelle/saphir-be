@@ -1,6 +1,7 @@
 package com.linreelle.saphir.mapper;
 
 import com.linreelle.saphir.dto.AdhesionResponse;
+import com.linreelle.saphir.dto.EmployeeResponseDto;
 import com.linreelle.saphir.dto.UserRequest;
 import com.linreelle.saphir.dto.UserResponse;
 import com.linreelle.saphir.model.User;
@@ -17,8 +18,19 @@ public class UserMapper {
         response.setEmail(user.getEmail());
         response.setTelephone(user.getTelephone());
 
-        System.out.println("Mapping user: " + user.getEmail());
+        return response;
+    }
 
+    public static EmployeeResponseDto toEmployeeDTO(User user){
+        EmployeeResponseDto response = new EmployeeResponseDto();
+        response.setFirstName(user.getFirstName());
+        response.setLastName(user.getLastName());
+        response.setEmail(user.getEmail());
+        response.setTelephone(user.getTelephone());
+        response.setMiddleName(user.getMiddleName());
+        response.setTitle(user.getTitle());
+        response.setRole(user.getRole());
+        response.setId(user.getId().toString());
         return response;
     }
 
@@ -45,7 +57,6 @@ public class UserMapper {
         user.setPassword(request.getPassword());
         user.setEmail(request.getEmail());
         user.setTelephone(request.getTelephone());
-        user.setConfirmPassword(request.getConfirmPassword());
         user.setAddress(request.getAddress());
         user.setDateOfBirth(request.getDateOfBirth());
         user.setRegisteredDate(LocalDate.now());

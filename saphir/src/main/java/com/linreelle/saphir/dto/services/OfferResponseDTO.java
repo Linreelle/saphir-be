@@ -5,6 +5,7 @@ import com.linreelle.saphir.model.services.Bundle;
 import lombok.Data;
 
 @Data
+
 public class OfferResponseDTO {
     private String id;
     private String name;
