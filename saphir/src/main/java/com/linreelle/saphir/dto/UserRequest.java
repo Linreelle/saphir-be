@@ -36,8 +36,6 @@ public class UserRequest {
     @NotBlank(message = "Telephone number is required")
     @Size(max = 10, message = "Telephone number cannot exceed 10 characters")
     private String telephone;
-
-    @NotBlank
     private Role role;
 
 }
