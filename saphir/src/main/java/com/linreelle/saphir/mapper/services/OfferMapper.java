@@ -11,7 +11,6 @@ public class OfferMapper {
         offerResponseDTO.setId(offer.getId().toString());
         offerResponseDTO.setName(offer.getName());
         offerResponseDTO.setDescription(offer.getDescription());
-        offerResponseDTO.setBundle(offer.getBundle());
 
         return offerResponseDTO;
     }

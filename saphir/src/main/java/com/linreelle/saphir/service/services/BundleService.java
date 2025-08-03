@@ -72,7 +72,7 @@ public class BundleService {
     public void addOfferToBundle(Integer bundleId, Offer offer) {
         Bundle bundle = bundleRepository.findById(bundleId)
                 .orElseThrow(() -> new BundleNotFindException("Bundle not found"));
-        offer.setBundle(bundle);
+
         bundle.getOffers().add(offer);
         offerRepository.save(offer);
     }

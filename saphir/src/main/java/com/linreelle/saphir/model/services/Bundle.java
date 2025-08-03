@@ -23,7 +23,8 @@ public class Bundle {
     private String name;
     @Column
     private String description;
-    @OneToMany(mappedBy = "bundle", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany
+    @JoinColumn(name = "bundle_id")
     private List<Offer> offers = new ArrayList<>();
 
 }

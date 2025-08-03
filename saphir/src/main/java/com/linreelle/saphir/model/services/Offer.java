@@ -22,8 +22,4 @@ public class Offer {
     @Column
     private String description;
     private Boolean isActive;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "bundle_id", nullable = true)
-    private Bundle bundle;
-
 }
