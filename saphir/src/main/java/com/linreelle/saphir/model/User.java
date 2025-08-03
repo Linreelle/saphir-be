@@ -54,7 +54,7 @@ public class User implements UserDetails {
     @Column
     @Lob
     private byte[] pp;
-    @Column
+    @Column(nullable = false)
     private LocalDate dateOfBirth;
     @Column
     private String address;
