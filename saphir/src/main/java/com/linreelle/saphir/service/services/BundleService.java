@@ -7,7 +7,9 @@ import com.linreelle.saphir.exception.BundleAlreadyExistsException;
 import com.linreelle.saphir.exception.BundleNotFindException;
 import com.linreelle.saphir.mapper.services.BundleMapper;
 import com.linreelle.saphir.model.services.Bundle;
+import com.linreelle.saphir.model.services.Offer;
 import com.linreelle.saphir.repository.services.BundleRepository;
+import com.linreelle.saphir.repository.services.OfferRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +19,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BundleService {
     private final BundleRepository bundleRepository;
+    private final OfferRepository offerRepository;
 //    private final BillingServiceGrpcClient billingServiceGrpcClient;
 //    private  final KafkaProducer kafkaProducer;
 
@@ -66,6 +69,13 @@ public class BundleService {
         return BundleMapper.toDTO(updatedBundle);
     }
 
+    public void addOfferToBundle(Integer bundleId, Offer offer) {
+        Bundle bundle = bundleRepository.findById(bundleId)
+                .orElseThrow(() -> new BundleNotFindException("Bundle not found"));
+        offer.setBundle(bundle);
+        bundle.getOffers().add(offer);
+        offerRepository.save(offer);
+    }
     public void deleteBundle(Integer id){
         bundleRepository.deleteById(id);
     }

@@ -21,11 +21,9 @@ public class Offer {
     private String name;
     @Column
     private String description;
-    private BigDecimal price;
     private Boolean isActive;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "bundle_id")
+    @JoinColumn(name = "bundle_id", nullable = true)
     private Bundle bundle;
-    private String validFrom;
-    private String validTo;
+
 }
