@@ -34,7 +34,9 @@ public class OfferController {
             return ResponseEntity.ok().body(offers);
         } catch (Exception e) {
             log.error("error fetching offers", e);
+            System.out.println(e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+
         }
     }
 

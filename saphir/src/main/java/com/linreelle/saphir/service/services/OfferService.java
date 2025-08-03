@@ -31,9 +31,11 @@ public class OfferService {
     private final UserRepository userRepository;
 
     public List<OfferResponseDTO> getOffers(){
-        
+
         log.debug("Fetching offers from repository");
         List<Offer> offers = offerRepository.findByIsActiveTrue();
+        log.info("Received request to fetch offers");
+        log.debug("Offer list size: {}", offers.size());
         return offers.stream().map(OfferMapper::toDTO).toList();
     }
     public void subscribeUserToOffer(UUID userId, Integer offerId) {
@@ -56,6 +58,7 @@ public class OfferService {
     }
     public OfferResponseDTO createOffer (OfferRequestDTO offerRequestDTO){
         if (offerRepository.existsByName(offerRequestDTO.getName())){
+
             throw new BundleAlreadyExistsException("A Offer with this name already exists"
                     + offerRequestDTO.getName());
         }
