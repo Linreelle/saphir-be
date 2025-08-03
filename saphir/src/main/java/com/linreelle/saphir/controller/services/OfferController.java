@@ -27,17 +27,10 @@ public class OfferController {
     @GetMapping
     @Operation(summary = "Get offers")
     public ResponseEntity<?> getOffers(){
-        log.info("Fetching offers");
-        System.out.println("Received request at /health");
-        try {
-            List<OfferResponseDTO> offers = offerService.getOffers();
-            return ResponseEntity.ok().body(offers);
-        } catch (Exception e) {
-            log.error("error fetching offers", e);
-            System.out.println(e.getMessage());
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
-
-        }
+        log.debug("Start getOffers()");
+        List<OfferResponseDTO> offers = offerService.getOffers();
+        log.debug("Successfully mapped {} offers", offers.size());
+        return ResponseEntity.ok(offers);
     }
 
     @PostMapping("/{offer_id}/subscribe")

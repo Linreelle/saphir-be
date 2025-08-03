@@ -36,6 +36,8 @@ public class OfferService {
         List<Offer> offers = offerRepository.findByIsActiveTrue();
         log.info("Received request to fetch offers");
         log.debug("Offer list size: {}", offers.size());
+        offers.forEach(o -> log.debug("Mapping offer: {}", o.getId()));
+
         return offers.stream().map(OfferMapper::toDTO).toList();
     }
     public void subscribeUserToOffer(UUID userId, Integer offerId) {
