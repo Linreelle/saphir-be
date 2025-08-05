@@ -36,7 +36,6 @@ spring:
               predicates:
                 - Path=/api/offers/**
               filters:
-                - StripPrefix=1
                 - JwtValidation
 
             - id: saphir-user-route
