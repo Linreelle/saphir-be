@@ -32,11 +32,7 @@ public class GlobalExceptionHandler {
                 errors.put(err.getField(), err.getDefaultMessage()));
         return ResponseEntity.badRequest().body(errors);
     }
-//    @ExceptionHandler(AccessDeniedException.class)
-//    public ResponseEntity<?> handleAccessDenied(AccessDeniedException ex) {
-//        return ResponseEntity.status(HttpStatus.FORBIDDEN)
-//                .body("Access denied: " + ex.getMessage());
-//    }
+
 
 //    @ExceptionHandler(Exception.class)
 //    public ResponseEntity<?> handleGenericException(Exception ex) {
