@@ -1,23 +1,32 @@
 package com.linreelle.saphir.model.services;
 
-
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "offers")
-@Data
-@AllArgsConstructor
+@Getter
+@Setter
 @NoArgsConstructor
+@AllArgsConstructor
 public class Offer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-    @Column
+    private Long id;
+
     private String name;
-    @Column
     private String description;
-    private Boolean isActive;
+    // Add other fields as needed
+
+    @ManyToMany(mappedBy = "offers")
+    private Set<Bundle> bundles = new HashSet<>();
+
+    private String createdBy;
+    private String updatedBy;
 }

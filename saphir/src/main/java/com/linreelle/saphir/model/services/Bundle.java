@@ -2,30 +2,34 @@ package com.linreelle.saphir.model.services;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Data
-@Builder
 @Entity
 @Table(name = "bundles")
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Bundle {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
-    @Column
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     private String name;
-    @Column
-    private String description;
-    @OneToMany
-    @JoinColumn(name = "bundle_id")
-    private List<Offer> offers = new ArrayList<>();
 
+    @ManyToMany
+    @JoinTable(
+            name = "bundle_offer",
+            joinColumns = @JoinColumn(name = "bundle_id"),
+            inverseJoinColumns = @JoinColumn(name = "offer_id")
+    )
+    private Set<Offer> offers = new HashSet<>();
+
+    private String createdBy;
+    private String updatedBy;
 }
-

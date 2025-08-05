@@ -1,6 +1,8 @@
 package com.linreelle.saphir.model;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.linreelle.saphir.model.services.Bundle;
+import com.linreelle.saphir.model.services.Offer;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import lombok.*;
@@ -8,9 +10,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDate;
-import java.util.Collection;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Entity
 @Data
@@ -70,6 +70,22 @@ public class User implements UserDetails {
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private Confirmation confirmation;
+
+    @ManyToMany
+    @JoinTable(
+            name = "user_offer_subscription",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "offer_id")
+    )
+    private Set<Offer> subscribedOffers = new HashSet<>();
+
+    @ManyToMany
+    @JoinTable(
+            name = "user_bundle_subscription",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "bundle_id")
+    )
+    private Set<Bundle> subscribedBundles = new HashSet<>();
 
     private boolean active = true;
     private boolean enabled = false;
