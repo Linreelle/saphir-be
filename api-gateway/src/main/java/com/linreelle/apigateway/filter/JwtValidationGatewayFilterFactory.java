@@ -14,7 +14,7 @@ public class JwtValidationGatewayFilterFactory extends AbstractGatewayFilterFact
     private final WebClient webClient;
 
     public JwtValidationGatewayFilterFactory(WebClient.Builder webClientBuilder,
-                                             @Value("saphir.railway.internal") String authServiceUrl) {
+                                             @Value("${SAPHIR_URL}") String authServiceUrl) {
         this.webClient = webClientBuilder.baseUrl(authServiceUrl).build();
     }
 
