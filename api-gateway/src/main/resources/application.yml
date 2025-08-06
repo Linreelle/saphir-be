@@ -51,7 +51,6 @@ spring:
               predicates:
                 - Path=/api/bundles/**
               filters:
-                - StripPrefix=1
                 - JwtValidation
 
 
