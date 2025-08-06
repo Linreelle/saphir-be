@@ -34,22 +34,26 @@ public class UserService implements UserDetailsService {
     private final UserDao userDao;
     private final PasswordEncoder passwordEncoder;
 
-    private String getLoggedInUserName(){
+    private String getLoggedInUserName() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (principal instanceof User){
+        if (principal instanceof UserDetails) {
             return ((UserDetails) principal).getUsername();
         }
         return principal.toString();
     }
 
-    // If you want to return your full custom User entity from the database:
+    /**
+     * Fetches the full user details and maps them to ProfileDto.
+     */
     public ProfileDto getLoggedInUser() {
-        String name = getLoggedInUserName();
-        if (name == null) {
-            throw new IllegalStateException("No profile found in ModelMap");
+        String username = getLoggedInUserName();
+        if (username == null) {
+            throw new IllegalStateException("No authenticated user found");
         }
-        User user = userRepository.findByEmail(name)
-                .orElseThrow(() -> new IllegalStateException("No user found for profile: " + name));
+
+        User user = userRepository.findByEmail(username)
+                .orElseThrow(() -> new IllegalStateException("No user found for profile: " + username));
+
         return ProfileMapper.toDTO(user);
     }
 
@@ -139,7 +143,7 @@ public class UserService implements UserDetailsService {
         // Update profile picture only if file was uploaded
         if (dto.getPp() != null && !dto.getPp().isEmpty()) {
             try {
-                user.setPp(dto.getPp().getBytes());
+                user.setProfilePicture(dto.getPp().getBytes());
             } catch (IOException e) {
                 throw new RuntimeException("Failed to process profile picture", e);
             }

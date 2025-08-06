@@ -19,5 +19,6 @@ public class ProfileDto {
     private String telephone;
     private LocalDate dateOfBirth;
     private String address;
-    private byte[] pp;
+    private String profilePictureBase64;
 }
+

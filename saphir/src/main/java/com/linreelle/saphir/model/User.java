@@ -53,7 +53,7 @@ public class User implements UserDetails {
     private byte[] idCard;
     @Column
     @Lob
-    private byte[] pp;
+    private byte[] profilePicture;
     @Column(nullable = false)
     private LocalDate dateOfBirth;
     @Column

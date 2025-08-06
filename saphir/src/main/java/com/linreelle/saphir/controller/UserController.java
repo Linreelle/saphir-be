@@ -42,7 +42,7 @@ public class UserController {
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/profile")
-    public ResponseEntity<ProfileDto> profile(){
+    public ResponseEntity<ProfileDto> profile() {
         ProfileDto response = userService.getLoggedInUser();
         return ResponseEntity.ok(response);
     }
