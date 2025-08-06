@@ -40,17 +40,11 @@ public class UserController {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
         binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, false));
     }
-    private String getLoggedInUser(ModelMap modelMap){
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (principal instanceof User){
-            return ((User) principal).getFirstName() + " " + ((User) principal).getLastName();
-        }
-        return principal.toString();
-    }
+
     @PreAuthorize("hasAnyRole('USER','MANAGER','ADMIN')")
     @GetMapping("/profile")
-    public ResponseEntity<ProfileDto> profile(ModelMap modelMap){
-        ProfileDto response = userService.getLoggedInUser(modelMap);
+    public ResponseEntity<ProfileDto> profile(){
+        ProfileDto response = userService.getLoggedInUser();
         return ResponseEntity.ok(response);
     }
 
@@ -108,7 +102,7 @@ public class UserController {
             @RequestBody UserRequest request,
             ModelMap modelMap) {
 
-        UserResponse userResponseDTO = userService.createUser(request, modelMap);
+        UserResponse userResponseDTO = userService.createUser(request);
 
         return ResponseEntity.ok().body(userResponseDTO);
     }

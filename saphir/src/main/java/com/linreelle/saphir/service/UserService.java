@@ -34,7 +34,7 @@ public class UserService implements UserDetailsService {
     private final UserDao userDao;
     private final PasswordEncoder passwordEncoder;
 
-    private String getLoggedInUserName(ModelMap modelMap){
+    private String getLoggedInUserName(){
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (principal instanceof User){
             return ((User) principal).getEmail();
@@ -43,8 +43,8 @@ public class UserService implements UserDetailsService {
     }
 
     // If you want to return your full custom User entity from the database:
-    public ProfileDto getLoggedInUser(ModelMap modelMap) {
-        String name = getLoggedInUserName(modelMap);
+    public ProfileDto getLoggedInUser() {
+        String name = getLoggedInUserName();
         if (name == null) {
             throw new IllegalStateException("No profile found in ModelMap");
         }
@@ -77,7 +77,7 @@ public class UserService implements UserDetailsService {
         return UserMapper.toDTO(user);
     }
 
-    public UserResponse createUser (UserRequest request, ModelMap modelMap) {
+    public UserResponse createUser (UserRequest request) {
 
         if (userRepository.existsByEmail(request.getEmail())){
             throw new EmailAlreadyExistsException("A User with this email already exists"
@@ -87,7 +87,7 @@ public class UserService implements UserDetailsService {
             throw new TelephoneAlreadyExistException("A User with this telephone number already exists"
                     + request.getTelephone());
         }
-        String name = getLoggedInUserName(modelMap);
+        String name = getLoggedInUserName();
 
         User newUser = User.builder()
                 .createdBy(name)
