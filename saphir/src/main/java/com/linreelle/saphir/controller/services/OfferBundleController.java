@@ -71,11 +71,10 @@ public class OfferBundleController {
 
     @PreAuthorize("hasAnyRole('MANAGER','ADMIN')")
     @PostMapping("/bundles")
-    public ResponseEntity<Bundle> createBundle(@RequestBody BundleRequest bundleRequest, ModelMap modelMap) {
+    public ResponseEntity<Bundle> createBundle(@RequestBody BundleRequest request, ModelMap modelMap) {
         Bundle bundle = new Bundle();
-        bundle.setName(bundleRequest.getName());
         bundle.setCreatedBy(getLoggedInUserName());
-        Bundle created = bundleService.createBundle(bundle, bundleRequest.getOfferIds());
+        Bundle created = bundleService.createBundle(request, request.getOfferIds());
         return new ResponseEntity<>(created, HttpStatus.CREATED);
     }
 

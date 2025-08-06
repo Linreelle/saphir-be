@@ -1,5 +1,6 @@
 package com.linreelle.saphir.service.services;
 
+import com.linreelle.saphir.dto.services.BundleRequest;
 import com.linreelle.saphir.model.User;
 import com.linreelle.saphir.model.services.Bundle;
 import com.linreelle.saphir.model.services.Offer;
@@ -24,9 +25,15 @@ public class BundleService {
     private final BundleRepository bundleRepository;
     private final OfferRepository offerRepository;
 
-    public Bundle createBundle(Bundle bundle, Set<Long> offerIds) {
+    public Bundle createBundle(BundleRequest request, Set<Long> offerIds) {
         Set<Offer> offers = new HashSet<>(offerRepository.findAllById(offerIds));
+
+        Bundle bundle = new Bundle();
+        request.setOfferIds(offerIds);
+        bundle.setName(request.getName());
+        bundle.setDescription(request.getDescription());
         bundle.setOffers(offers);
+
         return bundleRepository.save(bundle);
     }
     public List<Bundle> getAllBundles() {
