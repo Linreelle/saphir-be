@@ -33,25 +33,13 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-
-
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(
                         auth ->
                                 auth
                                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                                         .requestMatchers("/login", "/register", "/error", "/").permitAll()
-
                                         .requestMatchers(HttpMethod.POST, "/logout").hasAnyAuthority(ADMIN_READ.name(), MANAGER_READ.name(), USER.name())
-
-                                        .requestMatchers("/users/**").hasAnyRole(ADMIN.name(), MANAGER.name(), USER.name())
-                                        .requestMatchers(HttpMethod.GET, "/users").hasAuthority(ADMIN_READ.name())
-                                        .requestMatchers(HttpMethod.GET, "/users/profile").hasAuthority(USER_READ.name())
-                                        .requestMatchers(HttpMethod.PUT, "/users/profile").hasAuthority(USER_UPDATE.name())
-                                        .requestMatchers(HttpMethod.GET, "/users/**").hasAnyAuthority(ADMIN_READ.name(), MANAGER_READ.name())
-                                        .requestMatchers(HttpMethod.POST, "/users/**").hasAuthority(ADMIN_CREATE.name())
-                                        .requestMatchers(HttpMethod.PUT, "/users/**").hasAuthority(ADMIN_UPDATE.name())
-                                        .requestMatchers(HttpMethod.DELETE, "/users/**").hasAuthority(ADMIN_DELETE.name())
 
                                         .anyRequest().authenticated()
                 )

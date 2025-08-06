@@ -34,14 +34,13 @@ import java.util.UUID;
 @RequestMapping("/users")
 public class UserController {
     private final UserService userService;
-    private final UserRepository userRepository;
     @InitBinder
     public void initBinder(WebDataBinder binder){
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
         binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, false));
     }
 
-    @PreAuthorize("hasAnyRole('USER','MANAGER','ADMIN')")
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/profile")
     public ResponseEntity<ProfileDto> profile(){
         ProfileDto response = userService.getLoggedInUser();
@@ -82,6 +81,7 @@ public class UserController {
 
     @GetMapping("/{id}")
     @Operation(summary = "Get a user")
+    @PreAuthorize("hasAnyRole('ADMIN','MANAGER')")
     public ResponseEntity<UserResponse> getAUser(
             @PathVariable UUID id){
         UserResponse user = userService.getAUser(id);
@@ -90,13 +90,14 @@ public class UserController {
 
     @GetMapping(value = {"/criteria/{userSearchRequest}"})
     @Operation(summary = "Get users by criteria")
+    @PreAuthorize("hasAnyRole('ADMIN','USER','MANAGER')")
     public List<User> searchByCriteria(@PathVariable UserSearchRequest userSearchRequest){
         return userService.findByCriteria(userSearchRequest);
     }
 
     @PostMapping
     @Operation(summary = "Create a new user")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN','MANAGER')")
     public ResponseEntity<UserResponse> createUser(
             @Validated({Default.class, CreateUserValidationGroup.class})
             @RequestBody UserRequest request,
@@ -108,6 +109,7 @@ public class UserController {
     }
     @PatchMapping("/adhesion/{id}")
     @Operation(summary = "Subscribe to an offer")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<AdhesionResponse> adhesion(
             @PathVariable UUID id, @Validated({Default.class})
             @RequestBody AdhesionRequest request
@@ -118,6 +120,7 @@ public class UserController {
     }
 
     @PutMapping("/profile")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<ProfileDto> updateProfile(
             @ModelAttribute ChangeProfileDto dto,
             Authentication authentication
@@ -128,6 +131,7 @@ public class UserController {
 
     @PatchMapping("/{id}")
     @Operation(summary = "Update an existing user")
+    @PreAuthorize("hasAnyRole('ADMIN','MANAGER')")
     public ResponseEntity<UserResponse> updateUser(
             @PathVariable UUID id, @Validated({Default.class})
             @RequestBody UserRequest userRequestDTO){
@@ -139,6 +143,7 @@ public class UserController {
 
     @DeleteMapping("{id}")
     @Operation(summary = "Delete a user")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> deleteUser(@PathVariable UUID id){
         userService.deleteUser(id);
 

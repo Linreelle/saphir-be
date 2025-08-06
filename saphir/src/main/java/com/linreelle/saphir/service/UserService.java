@@ -37,7 +37,7 @@ public class UserService implements UserDetailsService {
     private String getLoggedInUserName(){
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (principal instanceof User){
-            return ((User) principal).getEmail();
+            return ((UserDetails) principal).getUsername();
         }
         return principal.toString();
     }
