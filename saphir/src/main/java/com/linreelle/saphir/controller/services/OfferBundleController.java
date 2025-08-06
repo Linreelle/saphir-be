@@ -69,9 +69,6 @@ public class OfferBundleController {
         return ResponseEntity.noContent().build();
     }
 
-    // === Bundle endpoints ===
-
-    // Create bundle, expects JSON { "name": "...", "offerIds": [...] }
     @PreAuthorize("hasAnyRole('MANAGER','ADMIN')")
     @PostMapping("/bundles")
     public ResponseEntity<Bundle> createBundle(@RequestBody BundleRequest bundleRequest, ModelMap modelMap) {

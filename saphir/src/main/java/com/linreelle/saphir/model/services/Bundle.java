@@ -21,7 +21,7 @@ public class Bundle {
     private Long id;
 
     private String name;
-
+    private String description;
     @ManyToMany
     @JoinTable(
             name = "bundle_offer",

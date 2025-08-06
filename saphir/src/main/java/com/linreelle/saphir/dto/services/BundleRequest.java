@@ -9,6 +9,7 @@ import java.util.Set;
 @Getter
 public class BundleRequest {
     private String name;
+    private String description;
     private Set<Long> offerIds;
 
 }

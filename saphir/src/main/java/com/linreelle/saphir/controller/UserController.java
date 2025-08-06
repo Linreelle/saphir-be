@@ -47,7 +47,7 @@ public class UserController {
         }
         return principal.toString();
     }
-
+    @PreAuthorize("hasAnyRole('USER','MANAGER','ADMIN')")
     @GetMapping("/profile")
     public ResponseEntity<ProfileDto> profile(ModelMap modelMap){
         ProfileDto response = userService.getLoggedInUser(modelMap);
@@ -57,7 +57,7 @@ public class UserController {
 
     @GetMapping
     @Operation(summary = "Get Customers")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN','MANAGER')")
     public ResponseEntity<List<UserResponse>> getCustomers(){
             List<UserResponse> customers = userService.getCustomers();
             return ResponseEntity.ok().body(customers);
