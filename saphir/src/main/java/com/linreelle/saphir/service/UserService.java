@@ -11,6 +11,7 @@ import com.linreelle.saphir.mapper.UserMapper;
 import com.linreelle.saphir.model.User;
 import com.linreelle.saphir.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -27,6 +28,7 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class UserService implements UserDetailsService {
@@ -47,7 +49,7 @@ public class UserService implements UserDetailsService {
      */
     public ProfileDto getLoggedInUser() {
         String username = getLoggedInUserName();
-        System.out.println("username: " + username);
+        log.info("Get logged in user for username {}", username);
         if (username == null) {
             throw new IllegalStateException("No authenticated user found");
         }

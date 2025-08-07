@@ -44,7 +44,8 @@ public class UserController {
     @GetMapping("/profile")
     public ResponseEntity<ProfileDto> profile() {
         ProfileDto response = userService.getLoggedInUser();
-        System.out.println(response.toString());
+        log.info("Get logged in user for username {}", response);
+
         return ResponseEntity.ok(response);
     }
 
