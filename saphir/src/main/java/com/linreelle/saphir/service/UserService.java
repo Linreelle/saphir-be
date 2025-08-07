@@ -36,13 +36,16 @@ public class UserService implements UserDetailsService {
     private final UserDao userDao;
     private final PasswordEncoder passwordEncoder;
 
-    private String getLoggedInUserName() {
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (principal instanceof UserDetails) {
-            return ((UserDetails) principal).getUsername();
+    public String getLoggedInUserName() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        log.debug("Current auth in helper: {}", authentication);
+
+        if (authentication == null || !authentication.isAuthenticated()) {
+            return null;
         }
-        return principal.toString();
+        return authentication.getName();
     }
+
 
     /**
      * Fetches the full user details and maps them to ProfileDto.

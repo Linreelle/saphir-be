@@ -39,8 +39,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         if (request.getServletPath().contains("/api/v1/auth") &&
                 !request.getServletPath().contains("/logout")){
             filterChain.doFilter(request, response);
-            System.out.println("JWT filter running on: " + request.getRequestURI());
-            System.out.println("Authentication: " + SecurityContextHolder.getContext().getAuthentication());
+            log.info("JWT filter running on: {}", request.getRequestURI());
+            log.info("Authentication: {}", SecurityContextHolder.getContext().getAuthentication());
             return;
         }
         final String authHeader = request.getHeader("Authorization");
@@ -73,6 +73,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                         new WebAuthenticationDetailsSource().buildDetails(request)
                 );
                 SecurityContextHolder.getContext().setAuthentication(authToken);
+                log.debug("JWT filter set auth: {}", authToken);
+
             }
         }
         filterChain.doFilter(request, response);

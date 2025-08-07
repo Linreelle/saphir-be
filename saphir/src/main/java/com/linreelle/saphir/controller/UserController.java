@@ -127,6 +127,9 @@ public class UserController {
             @ModelAttribute ChangeProfileDto dto,
             Authentication authentication
     ) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        log.debug("Current auth in controller: {}", auth);
+
         ProfileDto updatedProfile = userService.updateLoggedInUser(dto, authentication);
         return ResponseEntity.ok(updatedProfile);
     }
