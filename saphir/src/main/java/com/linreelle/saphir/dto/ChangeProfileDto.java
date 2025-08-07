@@ -13,5 +13,5 @@ public class ChangeProfileDto {
         private String telephone;
         private LocalDate dateOfBirth;
         private String address;
-        private MultipartFile  pp;
+        private MultipartFile  profilePicture;
 }

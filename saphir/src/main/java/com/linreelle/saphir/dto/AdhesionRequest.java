@@ -1,7 +1,7 @@
 package com.linreelle.saphir.dto;
 
 
-import com.linreelle.saphir.model.IdentityMeans;
+import com.linreelle.saphir.model.IdType;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -26,9 +26,9 @@ public class AdhesionRequest {
     @NotBlank(message = "Email address is required")
     @Email
     private String email;
-    private IdentityMeans identityMeans;
+    private IdType idType;
     private String idCardNumber;
-    private byte[] idCard;
+    private String idCardBase64;
     @NotBlank(message = "Address is required")
     private String address;
 }

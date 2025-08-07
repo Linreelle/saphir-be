@@ -42,7 +42,7 @@ public class UserMapper {
         response.setMiddleName(user.getMiddleName());
         response.setEmail(user.getEmail());
         response.setTelephone(user.getTelephone());
-        response.setIdentityMeans(user.getIdentityMeans());
+        response.setIdentityMeans(user.getIdType());
         response.setIdCardNumber(user.getIdCardNumber());
         response.setIdCard(user.getIdCard());
         response.setAddress(user.getAddress());

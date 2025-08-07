@@ -5,7 +5,6 @@ import com.linreelle.saphir.dao.UserSearchRequest;
 import com.linreelle.saphir.dto.*;
 import com.linreelle.saphir.dto.validators.CreateUserValidationGroup;
 import com.linreelle.saphir.model.User;
-import com.linreelle.saphir.repository.UserRepository;
 import com.linreelle.saphir.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.groups.Default;
@@ -16,6 +15,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
@@ -44,6 +44,7 @@ public class UserController {
     @GetMapping("/profile")
     public ResponseEntity<ProfileDto> profile() {
         ProfileDto response = userService.getLoggedInUser();
+        System.out.println(response.toString());
         return ResponseEntity.ok(response);
     }
 
@@ -114,6 +115,7 @@ public class UserController {
             @PathVariable UUID id, @Validated({Default.class})
             @RequestBody AdhesionRequest request
     ){
+
         AdhesionResponse response = userService.adhesion(id, request);
 
         return ResponseEntity.ok().body(response);
@@ -148,6 +150,14 @@ public class UserController {
         userService.deleteUser(id);
 
         return ResponseEntity.noContent().build();
+    }
+
+    private UUID getLoggedInUserId() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (principal instanceof User) {
+            return ((User) principal).getId();
+        }
+        return (UUID) principal;
     }
 }
 

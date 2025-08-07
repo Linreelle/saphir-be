@@ -45,7 +45,7 @@ public class User implements UserDetails {
 
 
     @Enumerated(EnumType.STRING)
-    private IdentityMeans identityMeans;
+    private IdType idType;
     @Column
     private String idCardNumber;
     @Column

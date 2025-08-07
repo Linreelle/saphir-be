@@ -1,6 +1,6 @@
 package com.linreelle.saphir.model;
 
-public enum IdentityMeans {
+public enum IdType {
     INTERNATIONAL_PASSPORT,
     IDENTITY_CARD,
     DRIVING_LICENCE

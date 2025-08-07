@@ -47,6 +47,7 @@ public class UserService implements UserDetailsService {
      */
     public ProfileDto getLoggedInUser() {
         String username = getLoggedInUserName();
+        System.out.println("username: " + username);
         if (username == null) {
             throw new IllegalStateException("No authenticated user found");
         }
@@ -79,6 +80,7 @@ public class UserService implements UserDetailsService {
                 ()-> new UserNotFindException("User not find with ID:" +id));
 
         return UserMapper.toDTO(user);
+
     }
 
     public UserResponse createUser (UserRequest request) {
@@ -112,16 +114,15 @@ public class UserService implements UserDetailsService {
         return UserMapper.toDTO(newUser);
     }
     public AdhesionResponse adhesion (UUID id, AdhesionRequest request){
-        User user = userRepository.findById(id)
-                .orElseThrow(()-> new UserNotFindException("User not find with ID:" +id));
+        User user = userRepository.findById(id).orElseThrow();
         user.setFirstName(request.getFirstName());
         user.setLastName(request.getLastName());
         user.setMiddleName(request.getMiddleName());
         user.setTelephone(request.getTelephone());
         user.setEmail(request.getEmail());
-        user.setIdentityMeans(request.getIdentityMeans());
+        user.setIdType(request.getIdType());
         user.setIdCardNumber(request.getIdCardNumber());
-        user.setIdCard(request.getIdCard());
+        user.setIdCard(request.getIdCardBase64().getBytes());
         user.setAddress(request.getAddress());
 
         User subscribedUser = userRepository.save(user);
@@ -141,9 +142,9 @@ public class UserService implements UserDetailsService {
         user.setAddress(dto.getAddress());
 
         // Update profile picture only if file was uploaded
-        if (dto.getPp() != null && !dto.getPp().isEmpty()) {
+        if (dto.getProfilePicture() != null && !dto.getProfilePicture().isEmpty()) {
             try {
-                user.setProfilePicture(dto.getPp().getBytes());
+                user.setProfilePicture(dto.getProfilePicture().getBytes());
             } catch (IOException e) {
                 throw new RuntimeException("Failed to process profile picture", e);
             }
