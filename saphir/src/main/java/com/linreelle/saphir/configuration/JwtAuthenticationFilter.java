@@ -44,6 +44,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             return;
         }
         final String authHeader = request.getHeader("Authorization");
+        log.debug("Authorization header: {}", authHeader);
+
         final String jwt;
         final String userEmail;
         if (authHeader == null || !authHeader.startsWith("Bearer ")){
@@ -52,8 +54,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
         jwt = authHeader.substring(7);
         userEmail = jwtUtil.extractUsername(jwt);
-        log.info("Token received: {}", jwt);
-        log.info("User extracted: {}", userEmail);
+        log.debug("Token received: {}", jwt);
+        log.debug("User extracted: {}", userEmail);
 
 
         if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null){
@@ -62,6 +64,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                     .map(t-> !t.isExpired() && !t.isRevoked())
                     .orElse(false);
             if (jwtUtil.isTokenValid(jwt, userDetails) && isTokenValid){
+                log.debug("Is token valid: {}", jwtUtil.isTokenValid(jwt, userDetails));
                 UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                         userDetails,
                         null,
@@ -74,6 +77,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 );
                 SecurityContextHolder.getContext().setAuthentication(authToken);
                 log.debug("JWT filter set auth: {}", authToken);
+                log.debug("Setting SecurityContext with user: {}", userDetails.getUsername());
+
 
             }
         }
