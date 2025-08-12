@@ -84,7 +84,6 @@ public class UserService implements UserDetailsService {
         User newUser = User.builder()
                 .createdBy(name)
                 .isUser(true)
-                .hasAdhere(true)
                 .email(request.getEmail())
                 .firstName(request.getFirstName())
                 .middleName(request.getMiddleName())
@@ -99,8 +98,6 @@ public class UserService implements UserDetailsService {
                 .build();
                 userRepository.save(newUser);
 
-                String identifier = newUser.getFirstName()+" "+newUser.getMiddleName()+" "+newUser.getLastName();
-                emailService.sendAdhesionEmail(identifier,newUser.getEmail());
         return UserMapper.toDTO(newUser);
     }
 
@@ -118,7 +115,6 @@ public class UserService implements UserDetailsService {
     public AdhesionResponse adhesion (UUID id, AdhesionRequest request){
         User user = userRepository.findById(id).orElseThrow();
 
-
         user.setFirstName(request.getFirstName());
         user.setLastName(request.getLastName());
         user.setMiddleName(request.getMiddleName());
@@ -128,8 +124,12 @@ public class UserService implements UserDetailsService {
         user.setIdCardNumber(request.getIdCardNumber());
         user.setIdCard(request.getIdCardBase64().getBytes());
         user.setAddress(request.getAddress());
+        user.setHasAdhere(true);
 
         User subscribedUser = userRepository.save(user);
+
+        String name = subscribedUser.getFirstName() + " " + subscribedUser.getLastName();
+        emailService.sendAdhesionEmail(name, request.getEmail());
         return UserMapper.ToAdhesion(subscribedUser);
     }
 
