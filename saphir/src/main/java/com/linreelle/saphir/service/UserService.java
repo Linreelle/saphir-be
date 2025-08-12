@@ -20,6 +20,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -125,30 +126,58 @@ public class UserService implements UserDetailsService {
         User subscribedUser = userRepository.save(user);
         return UserMapper.ToAdhesion(subscribedUser);
     }
-    public ProfileDto updateLoggedInUser(ChangeProfileDto dto) {
+//    public ProfileDto updateLoggedInUser(ChangeProfileDto dto) {
+//
+//        User user = userRepository.findByEmail(dto.getEmail())
+//                .orElseThrow(()-> new UsernameNotFoundException("User not found with email:" + dto.getEmail()));
+//        // Update profile fields
+//        user.setFirstName(dto.getFirstName());
+//        user.setLastName(dto.getLastName());
+//        user.setEmail(dto.getEmail());
+//        user.setTelephone(dto.getTelephone());
+//        user.setDateOfBirth(dto.getDateOfBirth()); // if date is a String
+//        user.setAddress(dto.getAddress());
+//
+//        // Update profile picture only if file was uploaded
+//        if (dto.getProfilePicture() != null && !dto.getProfilePicture().isEmpty()) {
+//            try {
+//                user.setProfilePicture(dto.getProfilePicture().getBytes());
+//            } catch (IOException e) {
+//                throw new RuntimeException("Failed to process profile picture", e);
+//            }
+//        }
+//        User updated = userRepository.save(user);
+//        return ProfileMapper.toDTO(updated);
+//    }
 
-        User user = userRepository.findByEmail(dto.getEmail())
-                .orElseThrow(()-> new UsernameNotFoundException("User not found with email:" + dto.getEmail()));
-        // Update profile fields
-        user.setFirstName(dto.getFirstName());
-        user.setLastName(dto.getLastName());
-        user.setEmail(dto.getEmail());
-        user.setTelephone(dto.getTelephone());
-        user.setDateOfBirth(dto.getDateOfBirth()); // if date is a String
-        user.setAddress(dto.getAddress());
+    public ProfileDto changeProfile(String username, ChangeProfileDto dto) {
+        // Find the logged-in user
+        User user = userRepository.findByEmail(username)
+                .orElseThrow(() -> new IllegalStateException("User not found: " + username));
 
-        // Update profile picture only if file was uploaded
-        if (dto.getProfilePicture() != null && !dto.getProfilePicture().isEmpty()) {
+        // Update fields if they are not null
+        if (dto.getFirstName() != null) user.setFirstName(dto.getFirstName());
+        if (dto.getLastName() != null) user.setLastName(dto.getLastName());
+        if (dto.getEmail() != null) user.setEmail(dto.getEmail());
+        if (dto.getTelephone() != null) user.setTelephone(dto.getTelephone());
+        if (dto.getDateOfBirth() != null) user.setDateOfBirth(dto.getDateOfBirth());
+        if (dto.getAddress() != null) user.setAddress(dto.getAddress());
+
+        // Handle profile picture upload
+        MultipartFile profilePicture = dto.getProfilePicture();
+        if (profilePicture != null && !profilePicture.isEmpty()) {
             try {
-                user.setProfilePicture(dto.getProfilePicture().getBytes());
+                user.setProfilePicture(profilePicture.getBytes()); // assuming byte[] in your entity
             } catch (IOException e) {
-                throw new RuntimeException("Failed to process profile picture", e);
+                throw new RuntimeException("Failed to store profile picture", e);
             }
         }
 
+        // Save changes
+        userRepository.save(user);
 
-        User updated = userRepository.save(user);
-        return ProfileMapper.toDTO(updated);
+        // Return updated profile DTO
+        return ProfileMapper.toDTO(user);
     }
 
 

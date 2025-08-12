@@ -122,15 +122,25 @@ public class UserController {
         return ResponseEntity.ok().body(response);
     }
 
-    @PatchMapping("/profile")
-    public ResponseEntity<ProfileDto> updateProfile(
-            @ModelAttribute ChangeProfileDto dto,
-            @AuthenticationPrincipal UserDetails userDetails
-    ) {
-       String auth = userDetails.getUsername();
-        log.debug("Current auth in controller: {}", auth);
+//    @PatchMapping("/profile")
+//    public ResponseEntity<ProfileDto> updateProfile(
+//            @ModelAttribute ChangeProfileDto dto,
+//            @AuthenticationPrincipal UserDetails userDetails
+//    ) {
+//       String auth = userDetails.getUsername();
+//        log.debug("Current auth in controller: {}", auth);
+//
+//        ProfileDto updatedProfile = userService.updateLoggedInUser(dto);
+//        return ResponseEntity.ok(updatedProfile);
+//    }
 
-        ProfileDto updatedProfile = userService.updateLoggedInUser(dto);
+    @PatchMapping("/profile/change")
+    public ResponseEntity<ProfileDto> changeProfile(
+            @AuthenticationPrincipal UserDetails userDetails,
+            @ModelAttribute ChangeProfileDto dto
+    ) {
+        String username = userDetails.getUsername();
+        ProfileDto updatedProfile = userService.changeProfile(username, dto);
         return ResponseEntity.ok(updatedProfile);
     }
 
