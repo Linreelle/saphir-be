@@ -110,8 +110,8 @@ public class UserService implements UserDetailsService {
         }
     }
 
-    public AdhesionResponse adhesion (String email, AdhesionRequest request){
-        User user = userRepository.findByEmail(email).orElseThrow();
+    public AdhesionResponse adhesion (UUID id, AdhesionRequest request){
+        User user = userRepository.findById(id).orElseThrow();
 
         user.setFirstName(request.getFirstName());
         user.setLastName(request.getLastName());

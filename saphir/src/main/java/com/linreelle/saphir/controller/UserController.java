@@ -67,21 +67,6 @@ public class UserController {
         List<EmployeeResponseDto> users = userService.getUsers();
         return ResponseEntity.ok().body(users);
       }
-//    @GetMapping
-//    public ResponseEntity<?> getAllUsers( ModelMap modelMap) {
-//        log.info("Attempting to log in using request {}", getLoggedInUser(modelMap));
-//        try {
-//            List<User> users = userRepository.findAll();
-//            System.out.println("Fetched users: " + users);
-//
-//            return ResponseEntity.ok(users);
-//
-//        } catch (Exception e) {
-//            log.error("Login failed: {} ",e.getMessage());
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-//                    .body("Error fetching users: " + e.getMessage());
-//        }
-//    }
 
     @GetMapping("/{id}")
     @Operation(summary = "Get a user")
@@ -111,14 +96,14 @@ public class UserController {
 
         return ResponseEntity.ok().body(userResponseDTO);
     }
-    @PatchMapping("/adhesion/{email}")
+    @PatchMapping("/adhesion/{id}")
     @Operation(summary = "Subscribe to an offer")
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<AdhesionResponse> adhesion(
-            @PathVariable String email, @Validated({Default.class})
+            @PathVariable UUID id, @Validated({Default.class})
             @RequestBody AdhesionRequest request
     ){
-        AdhesionResponse response = userService.adhesion(email, request);
+        AdhesionResponse response = userService.adhesion(id, request);
         return ResponseEntity.ok().body(response);
     }
 
