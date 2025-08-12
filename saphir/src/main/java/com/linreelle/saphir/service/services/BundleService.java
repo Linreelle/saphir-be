@@ -25,24 +25,25 @@ public class BundleService {
     private final BundleRepository bundleRepository;
     private final OfferRepository offerRepository;
 
-    public Bundle createBundle(BundleRequest request, Set<Long> offerIds) {
+    public Bundle createBundle(BundleRequest request, Set<Long> offerIds, String createdBy) {
+        if (offerIds == null || offerIds.isEmpty()) {
+            throw new IllegalArgumentException("Offer IDs must be provided");
+        }
+
         Set<Offer> offers = new HashSet<>(offerRepository.findAllById(offerIds));
+        if (offers.size() != offerIds.size()) {
+            throw new EntityNotFoundException("One or more offers not found");
+        }
 
         Bundle bundle = new Bundle();
-        request.setOfferIds(offerIds);
         bundle.setName(request.getName());
         bundle.setDescription(request.getDescription());
         bundle.setOffers(offers);
+        bundle.setCreatedBy(createdBy);
 
         return bundleRepository.save(bundle);
     }
-    public List<Bundle> getAllBundles() {
-        return bundleRepository.findAll();
-    }
 
-    public Optional<Bundle> getBundleById(Long id) {
-        return bundleRepository.findById(id);
-    }
 
 
     @Transactional
