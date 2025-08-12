@@ -43,6 +43,7 @@ public class SecurityConfig {
                                         .requestMatchers(HttpMethod.POST, "/logout").hasAnyAuthority(ADMIN_READ.name(), MANAGER_READ.name(), USER.name())
                                         .requestMatchers("/users/getProfile").authenticated()
                                         .requestMatchers("/users/profile/change").authenticated()
+                                        .requestMatchers("/users/adhesion/**").hasRole(USER.name())
                                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session-> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

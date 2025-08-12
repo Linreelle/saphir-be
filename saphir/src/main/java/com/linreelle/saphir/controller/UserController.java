@@ -98,7 +98,6 @@ public class UserController {
     }
     @PatchMapping("/adhesion/{id}")
     @Operation(summary = "Subscribe to an offer")
-    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<AdhesionResponse> adhesion(
             @PathVariable UUID id, @Validated({Default.class})
             @RequestBody AdhesionRequest request
