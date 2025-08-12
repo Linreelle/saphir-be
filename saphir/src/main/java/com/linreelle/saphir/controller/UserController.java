@@ -111,28 +111,16 @@ public class UserController {
 
         return ResponseEntity.ok().body(userResponseDTO);
     }
-    @PatchMapping("/adhesion/{id}")
+    @PatchMapping("/adhesion/{email}")
     @Operation(summary = "Subscribe to an offer")
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<AdhesionResponse> adhesion(
-            @PathVariable UUID id, @Validated({Default.class})
+            @PathVariable String email, @Validated({Default.class})
             @RequestBody AdhesionRequest request
     ){
-        AdhesionResponse response = userService.adhesion(id, request);
+        AdhesionResponse response = userService.adhesion(email, request);
         return ResponseEntity.ok().body(response);
     }
-
-//    @PatchMapping("/profile")
-//    public ResponseEntity<ProfileDto> updateProfile(
-//            @ModelAttribute ChangeProfileDto dto,
-//            @AuthenticationPrincipal UserDetails userDetails
-//    ) {
-//       String auth = userDetails.getUsername();
-//        log.debug("Current auth in controller: {}", auth);
-//
-//        ProfileDto updatedProfile = userService.updateLoggedInUser(dto);
-//        return ResponseEntity.ok(updatedProfile);
-//    }
 
     @PatchMapping("/profile/change")
     public ResponseEntity<ProfileDto> changeProfile(

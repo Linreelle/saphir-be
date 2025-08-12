@@ -110,8 +110,8 @@ public class UserService implements UserDetailsService {
         }
     }
 
-    public AdhesionResponse adhesion (UUID id, AdhesionRequest request){
-        User user = userRepository.findById(id).orElseThrow();
+    public AdhesionResponse adhesion (String email, AdhesionRequest request){
+        User user = userRepository.findByEmail(email).orElseThrow();
 
         user.setFirstName(request.getFirstName());
         user.setLastName(request.getLastName());
@@ -126,29 +126,6 @@ public class UserService implements UserDetailsService {
         User subscribedUser = userRepository.save(user);
         return UserMapper.ToAdhesion(subscribedUser);
     }
-//    public ProfileDto updateLoggedInUser(ChangeProfileDto dto) {
-//
-//        User user = userRepository.findByEmail(dto.getEmail())
-//                .orElseThrow(()-> new UsernameNotFoundException("User not found with email:" + dto.getEmail()));
-//        // Update profile fields
-//        user.setFirstName(dto.getFirstName());
-//        user.setLastName(dto.getLastName());
-//        user.setEmail(dto.getEmail());
-//        user.setTelephone(dto.getTelephone());
-//        user.setDateOfBirth(dto.getDateOfBirth()); // if date is a String
-//        user.setAddress(dto.getAddress());
-//
-//        // Update profile picture only if file was uploaded
-//        if (dto.getProfilePicture() != null && !dto.getProfilePicture().isEmpty()) {
-//            try {
-//                user.setProfilePicture(dto.getProfilePicture().getBytes());
-//            } catch (IOException e) {
-//                throw new RuntimeException("Failed to process profile picture", e);
-//            }
-//        }
-//        User updated = userRepository.save(user);
-//        return ProfileMapper.toDTO(updated);
-//    }
 
     public ProfileDto changeProfile(String username, ChangeProfileDto dto) {
         // Find the logged-in user
