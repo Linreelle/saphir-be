@@ -12,6 +12,7 @@ public class ProfileMapper {
             base64Image = Base64.getEncoder().encodeToString(user.getProfilePicture());
         }
         return ProfileDto.builder()
+                .id(user.getId())
                 .firstName(user.getFirstName())
                 .lastName(user.getLastName())
                 .profile(user.getProfile())
