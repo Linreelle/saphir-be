@@ -14,7 +14,6 @@ import java.util.*;
 
 @Entity
 @Data
-@ToString(exclude = "tokens")
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -64,10 +63,13 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @ToString.Exclude
     private List<Token> tokens;
+
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
+    @ToString.Exclude
     private Confirmation confirmation;
 
     @ManyToMany
@@ -76,6 +78,7 @@ public class User implements UserDetails {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "offer_id")
     )
+    @ToString.Exclude
     private Set<Offer> subscribedOffers = new HashSet<>();
 
     @ManyToMany
@@ -84,6 +87,7 @@ public class User implements UserDetails {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "bundle_id")
     )
+    @ToString.Exclude
     private Set<Bundle> subscribedBundles = new HashSet<>();
 
     private boolean active = true;
