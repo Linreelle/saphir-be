@@ -122,8 +122,7 @@ public class UserController {
         return ResponseEntity.ok().body(response);
     }
 
-    @PutMapping("/profile")
-    @PreAuthorize("isAuthenticated()")
+    @PatchMapping("/profile")
     public ResponseEntity<ProfileDto> updateProfile(
             @ModelAttribute ChangeProfileDto dto,
             @AuthenticationPrincipal UserDetails userDetails
