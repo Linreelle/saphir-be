@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.ui.ModelMap;
@@ -40,12 +41,13 @@ public class UserController {
         binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, false));
     }
 
-    @PreAuthorize("isAuthenticated()")
     @GetMapping("/profile")
-    public ResponseEntity<ProfileDto> profile() {
-        ProfileDto response = userService.getLoggedInUser();
-        log.info("Get logged in user for username {}", response);
-        log.debug("Get logged in user for username {}", response);
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<ProfileDto> profile(@AuthenticationPrincipal UserDetails userDetails) {
+        String username = userDetails.getUsername();
+        ProfileDto response = userService.getProfileByUsername(username);
+        log.info("Get logged in user for username {}", username);
+        log.debug("Get logged in user for username {}", username);
         return ResponseEntity.ok(response);
     }
 
@@ -115,9 +117,7 @@ public class UserController {
             @PathVariable UUID id, @Validated({Default.class})
             @RequestBody AdhesionRequest request
     ){
-
         AdhesionResponse response = userService.adhesion(id, request);
-
         return ResponseEntity.ok().body(response);
     }
 
@@ -125,12 +125,12 @@ public class UserController {
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<ProfileDto> updateProfile(
             @ModelAttribute ChangeProfileDto dto,
-            Authentication authentication
+            @AuthenticationPrincipal UserDetails userDetails
     ) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+       String auth = userDetails.getUsername();
         log.debug("Current auth in controller: {}", auth);
 
-        ProfileDto updatedProfile = userService.updateLoggedInUser(dto, authentication);
+        ProfileDto updatedProfile = userService.updateLoggedInUser(dto);
         return ResponseEntity.ok(updatedProfile);
     }
 

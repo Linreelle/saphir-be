@@ -15,7 +15,6 @@ import java.util.*;
 @Entity
 @Data
 @ToString(exclude = "tokens")
-
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor

@@ -36,33 +36,14 @@ public class UserService implements UserDetailsService {
     private final UserDao userDao;
     private final PasswordEncoder passwordEncoder;
 
-    public String getLoggedInUserName() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        log.debug("Current auth in helper: {}", authentication);
-
-        if (authentication == null || !authentication.isAuthenticated()) {
-            return null;
-        }
-        return authentication.getName();
-    }
-
-
     /**
      * Fetches the full user details and maps them to ProfileDto.
      */
-    public ProfileDto getLoggedInUser() {
-        String username = getLoggedInUserName();
-        log.info("Get logged in user for username {}", username);
-        if (username == null) {
-            throw new IllegalStateException("No authenticated user found");
-        }
-
+    public ProfileDto getProfileByUsername(String username) {
         User user = userRepository.findByEmail(username)
                 .orElseThrow(() -> new IllegalStateException("No user found for profile: " + username));
-
         return ProfileMapper.toDTO(user);
     }
-
 
     public Optional<User> findByEmail(String email) {
         return userRepository.findByEmail(email);
@@ -83,13 +64,11 @@ public class UserService implements UserDetailsService {
     public UserResponse getAUser(UUID id){
         User user = userRepository.findById(id).orElseThrow(
                 ()-> new UserNotFindException("User not find with ID:" +id));
-
         return UserMapper.toDTO(user);
 
     }
 
     public UserResponse createUser (UserRequest request) {
-
         if (userRepository.existsByEmail(request.getEmail())){
             throw new EmailAlreadyExistsException("A User with this email already exists"
                     + request.getEmail());
@@ -118,8 +97,21 @@ public class UserService implements UserDetailsService {
                 userRepository.save(newUser);
         return UserMapper.toDTO(newUser);
     }
+
+    private String getLoggedInUserName() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        if (principal instanceof User) {
+            return ((User) principal).getFirstName() + " " + ((User) principal).getLastName();
+        }
+        else {
+            return (String) principal;
+        }
+    }
+
     public AdhesionResponse adhesion (UUID id, AdhesionRequest request){
         User user = userRepository.findById(id).orElseThrow();
+
         user.setFirstName(request.getFirstName());
         user.setLastName(request.getLastName());
         user.setMiddleName(request.getMiddleName());
@@ -131,13 +123,12 @@ public class UserService implements UserDetailsService {
         user.setAddress(request.getAddress());
 
         User subscribedUser = userRepository.save(user);
-
         return UserMapper.ToAdhesion(subscribedUser);
     }
-    public ProfileDto updateLoggedInUser(ChangeProfileDto dto, Authentication authentication) {
-        String name = authentication.getName();
-        User user = userRepository.findByEmail(name)
-                .orElseThrow(()-> new UsernameNotFoundException("User not found with email:" +name));
+    public ProfileDto updateLoggedInUser(ChangeProfileDto dto) {
+
+        User user = userRepository.findByEmail(dto.getEmail())
+                .orElseThrow(()-> new UsernameNotFoundException("User not found with email:" + dto.getEmail()));
         // Update profile fields
         user.setFirstName(dto.getFirstName());
         user.setLastName(dto.getLastName());
