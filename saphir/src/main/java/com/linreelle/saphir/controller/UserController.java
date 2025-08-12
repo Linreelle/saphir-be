@@ -41,8 +41,7 @@ public class UserController {
         binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, false));
     }
 
-    @GetMapping("/profile")
-    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/getProfile")
     public ResponseEntity<ProfileDto> profile(@AuthenticationPrincipal UserDetails userDetails) {
         String username = userDetails.getUsername();
         log.info("Get logged in user for username {}", username);
