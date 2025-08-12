@@ -37,6 +37,7 @@ public class UserMapper {
     public static AdhesionResponse ToAdhesion (User user){
         AdhesionResponse response = new AdhesionResponse();
 
+        response.setId(user.getId());
         response.setFirstName(user.getFirstName());
         response.setLastName(user.getLastName());
         response.setMiddleName(user.getMiddleName());

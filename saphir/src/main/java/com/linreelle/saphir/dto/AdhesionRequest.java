@@ -15,6 +15,7 @@ import lombok.NoArgsConstructor;
 @Data
 @Builder
 public class AdhesionRequest {
+
     @NotBlank(message = "Firstname is required")
     private String firstName;
     @NotBlank(message = "Lastname is required")
