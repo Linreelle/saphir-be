@@ -7,6 +7,7 @@ import com.linreelle.saphir.dto.UserResponse;
 import com.linreelle.saphir.model.User;
 
 import java.time.LocalDate;
+import java.util.Base64;
 
 public class UserMapper {
     public static UserResponse toDTO(User user){
@@ -36,6 +37,10 @@ public class UserMapper {
 
     public static AdhesionResponse ToAdhesion (User user){
         AdhesionResponse response = new AdhesionResponse();
+
+        if (user.getIdCard() != null) {
+            response.setIdCardBase64(Base64.getEncoder().encodeToString(user.getIdCard()));
+        }
 
         response.setId(user.getId());
         response.setFirstName(user.getFirstName());

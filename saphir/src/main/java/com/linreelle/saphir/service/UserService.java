@@ -24,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -115,6 +116,12 @@ public class UserService implements UserDetailsService {
     public AdhesionResponse adhesion (UUID id, AdhesionRequest request){
         User user = userRepository.findById(id).orElseThrow();
 
+        if (request.getIdCardBase64() != null && !request.getIdCardBase64().isEmpty()) {
+            byte[] decodedBytes = Base64.getDecoder().decode(request.getIdCardBase64());
+            user.setIdCard(decodedBytes);
+        }
+
+
         user.setFirstName(request.getFirstName());
         user.setLastName(request.getLastName());
         user.setMiddleName(request.getMiddleName());
@@ -122,7 +129,6 @@ public class UserService implements UserDetailsService {
         user.setEmail(request.getEmail());
         user.setIdType(request.getIdType());
         user.setIdCardNumber(request.getIdCardNumber());
-        user.setIdCard(request.getIdCardBase64().getBytes());
         user.setAddress(request.getAddress());
         user.setHasAdhere(true);
 

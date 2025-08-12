@@ -18,5 +18,6 @@ public class AdhesionResponse {
     private String idCardNumber;
     private byte[] idCard;
     private String address;
+    private String idCardBase64;
 }
 
