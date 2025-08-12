@@ -45,9 +45,11 @@ public class UserController {
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<ProfileDto> profile(@AuthenticationPrincipal UserDetails userDetails) {
         String username = userDetails.getUsername();
-        ProfileDto response = userService.getProfileByUsername(username);
         log.info("Get logged in user for username {}", username);
         log.debug("Get logged in user for username {}", username);
+
+        ProfileDto response = userService.getProfileByUsername(username);
+
         return ResponseEntity.ok(response);
     }
 
