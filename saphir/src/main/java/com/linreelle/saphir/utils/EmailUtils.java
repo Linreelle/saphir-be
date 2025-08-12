@@ -12,6 +12,11 @@ public class EmailUtils {
         host = host.endsWith("/") ? host + "#" : host + "/#";
     }
     return host + "/verification?token=" + token;
-}
+    }
+
+    public static String adhesionMail (String name) {
+        return "Hello " + name + ", \n\nYour adhesion request has been received with success. \n Our customer support team " +
+                "will get in touch within 24 hours. \n Thank you for choosing Saphir ASBL";
+    }
 
 }

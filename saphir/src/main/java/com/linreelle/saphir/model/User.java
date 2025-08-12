@@ -93,6 +93,7 @@ public class User implements UserDetails {
     private boolean active = true;
     private boolean enabled = false;
     private boolean isUser = false;
+    private boolean hasAdhere = false;
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return role.getauthorities();

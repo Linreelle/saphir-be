@@ -36,6 +36,7 @@ public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
     private final UserDao userDao;
     private final PasswordEncoder passwordEncoder;
+    private final EmailService emailService;
 
     /**
      * Fetches the full user details and maps them to ProfileDto.
@@ -83,6 +84,7 @@ public class UserService implements UserDetailsService {
         User newUser = User.builder()
                 .createdBy(name)
                 .isUser(true)
+                .hasAdhere(true)
                 .email(request.getEmail())
                 .firstName(request.getFirstName())
                 .middleName(request.getMiddleName())
@@ -96,6 +98,9 @@ public class UserService implements UserDetailsService {
                 .role(request.getRole())
                 .build();
                 userRepository.save(newUser);
+
+                String identifier = newUser.getFirstName()+" "+newUser.getMiddleName()+" "+newUser.getLastName();
+                emailService.sendAdhesionEmail(identifier,newUser.getEmail());
         return UserMapper.toDTO(newUser);
     }
 
