@@ -12,7 +12,7 @@ import java.util.UUID;
 public interface UserRepository extends JpaRepository<User,UUID> {
     Optional<User> findByEmail(String email);
     Optional<User> findByTelephone(String telephone);
-  List<User> findByIsUserTrue(boolean isUser);
+  List<User> findByIsUserTrue();
     Page<User> findByIsUserTrue(Pageable pageable);
 
 
