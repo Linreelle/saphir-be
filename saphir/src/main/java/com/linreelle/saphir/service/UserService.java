@@ -12,6 +12,8 @@ import com.linreelle.saphir.model.User;
 import com.linreelle.saphir.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -60,8 +62,8 @@ public class UserService implements UserDetailsService {
         List<User> customers = userRepository.findAll();
         return customers.stream().map(UserMapper::toDTO).toList();
     }
-    public List<EmployeeResponseDto> getUsers(){
-        List<User> users = userRepository.findByIsUserTrue();
+    public List<EmployeeResponseDto> getUsers(Pageable pageable) {
+        Page<User> users = userRepository.findByUserTrue(pageable);
         return users.stream().map(UserMapper::toEmployeeDTO).toList();
     }
     public UserResponse getAUser(UUID id){

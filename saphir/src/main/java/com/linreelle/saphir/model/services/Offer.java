@@ -1,5 +1,6 @@
 package com.linreelle.saphir.model.services;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -25,6 +26,7 @@ public class Offer {
     // Add other fields as needed
 
     @ManyToMany(mappedBy = "offers")
+    @JsonBackReference
     private Set<Bundle> bundles = new HashSet<>();
 
     private String createdBy;

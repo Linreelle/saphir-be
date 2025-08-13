@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.groups.Default;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -63,8 +64,8 @@ public class UserController {
       @GetMapping("/systemUsers")
       @Operation(summary = "Get users")
       @PreAuthorize("hasRole('ADMIN')")
-      public ResponseEntity<List<EmployeeResponseDto>> getUsers(){
-        List<EmployeeResponseDto> users = userService.getUsers();
+      public ResponseEntity<List<EmployeeResponseDto>> getUsers(Pageable pageable){
+        List<EmployeeResponseDto> users = userService.getUsers(pageable);
         return ResponseEntity.ok().body(users);
       }
 
