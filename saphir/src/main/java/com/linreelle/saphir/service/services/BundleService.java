@@ -44,6 +44,13 @@ public class BundleService {
         return bundleRepository.save(bundle);
     }
 
+    public List<Bundle> getAllBundles() {
+        return bundleRepository.findAll();
+    }
+
+    public Optional<Bundle> getBundleById(Long id) {
+        return bundleRepository.findById(id);
+    }
 
 
     @Transactional
