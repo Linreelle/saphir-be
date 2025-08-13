@@ -63,7 +63,7 @@ public class UserService implements UserDetailsService {
         return customers.stream().map(UserMapper::toDTO).toList();
     }
     public List<EmployeeResponseDto> getUsers(Pageable pageable) {
-        Page<User> users = userRepository.findByUserTrue(pageable);
+        Page<User> users = userRepository.findByIsUserTrue(pageable);
         return users.stream().map(UserMapper::toEmployeeDTO).toList();
     }
     public UserResponse getAUser(UUID id){

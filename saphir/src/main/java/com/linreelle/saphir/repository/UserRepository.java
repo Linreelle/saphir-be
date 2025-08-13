@@ -12,8 +12,8 @@ import java.util.UUID;
 public interface UserRepository extends JpaRepository<User,UUID> {
     Optional<User> findByEmail(String email);
     Optional<User> findByTelephone(String telephone);
-    List<User> findByUserTrue(boolean isUser);
-    Page<User> findByUserTrue(Pageable pageable);
+  List<User> findByIsUserTrue(boolean isUser);
+    Page<User> findByIsUserTrue(Pageable pageable);
 
 
     User findByEmailIgnoreCase(String email);
