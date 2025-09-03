@@ -92,7 +92,7 @@ public class User implements UserDetails {
 
     private boolean active = true;
     private boolean enabled = false;
-    private boolean isUser = false;
+    private boolean isSystemUser = false;
     @Column(name = "hasadhere")
     private boolean hasAdhere = false;
     @Override
