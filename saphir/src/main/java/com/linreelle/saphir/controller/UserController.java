@@ -61,13 +61,13 @@ public class UserController {
             return ResponseEntity.ok().body(customers);
       }
 
-      @GetMapping("/systemUsers")
-      @Operation(summary = "Get users")
-      @PreAuthorize("hasRole('ADMIN')")
-      public ResponseEntity<List<EmployeeResponseDto>> getUsers(Pageable pageable){
-        List<EmployeeResponseDto> users = userService.getUsers(pageable);
-        return ResponseEntity.ok().body(users);
-      }
+//      @GetMapping("/systemUsers")
+//      @Operation(summary = "Get users")
+//      @PreAuthorize("hasRole('ADMIN')")
+//      public ResponseEntity<List<EmployeeResponseDto>> getUsers(Pageable pageable){
+//        List<EmployeeResponseDto> users = userService.getUsers(pageable);
+//        return ResponseEntity.ok().body(users);
+//      }
 
     @GetMapping("/{id}")
     @Operation(summary = "Get a user")

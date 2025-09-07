@@ -62,10 +62,10 @@ public class UserService implements UserDetailsService {
         List<User> customers = userRepository.findAll();
         return customers.stream().map(UserMapper::toDTO).toList();
     }
-    public List<EmployeeResponseDto> getUsers(Pageable pageable) {
-        Page<User> users = userRepository.findBySystemUserTrue(pageable);
-        return users.stream().map(UserMapper::toEmployeeDTO).toList();
-    }
+//    public List<EmployeeResponseDto> getUsers(Pageable pageable) {
+//        Page<User> users = userRepository.findBySystemUserTrue(pageable);
+//        return users.stream().map(UserMapper::toEmployeeDTO).toList();
+//    }
     public UserResponse getAUser(UUID id){
         User user = userRepository.findById(id).orElseThrow(
                 ()-> new UserNotFindException("User not find with ID:" +id));
