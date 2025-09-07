@@ -86,7 +86,7 @@ public class UserService implements UserDetailsService {
 
         User newUser = User.builder()
                 .createdBy(name)
-                .isSystemUser(true)
+                .systemUser(true)
                 .email(request.getEmail())
                 .firstName(request.getFirstName())
                 .middleName(request.getMiddleName())

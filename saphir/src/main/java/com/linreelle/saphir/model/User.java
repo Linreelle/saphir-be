@@ -96,7 +96,7 @@ public class User implements UserDetails {
     private boolean enabled = false;
     @Builder.Default
     @Column(name = "is_user")
-    private boolean isSystemUser = false;
+    private boolean systemUser = false;
     @Builder.Default
     @Column(name = "hasadhere")
     private boolean hasAdhere = false;
