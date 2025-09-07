@@ -90,10 +90,14 @@ public class User implements UserDetails {
     @ToString.Exclude
     private Set<Bundle> subscribedBundles = new HashSet<>();
 
+    @Builder.Default
     private boolean active = true;
+    @Builder.Default
     private boolean enabled = false;
+    @Builder.Default
     @Column(name = "is_user")
     private boolean isSystemUser = false;
+    @Builder.Default
     @Column(name = "hasadhere")
     private boolean hasAdhere = false;
     @Override
