@@ -27,7 +27,6 @@ public class Offer {
 
     private String name;
     private String description;
-    // Add other fields as needed
 
     @ManyToMany(mappedBy = "offers")
     private Set<Bundle> bundles = new HashSet<>();
