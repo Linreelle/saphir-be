@@ -12,8 +12,8 @@ public class CorsGlobalConfiguration {
     @Bean
     public CorsWebFilter corsWebFilter() {
         CorsConfiguration config = new CorsConfiguration();
-//        config.addAllowedOrigin("https://linreelle.github.io");
-        config.addAllowedOrigin("http://localhost:5173");
+        config.addAllowedOrigin("https://linreelle.github.io");
+//        config.addAllowedOrigin("http://localhost:5173");
         config.addAllowedMethod("*");
         config.addAllowedHeader("*");
         config.setAllowCredentials(true);
