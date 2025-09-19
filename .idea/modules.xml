@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/saphir/saphir.iml" filepath="$PROJECT_DIR$/saphir/saphir.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/saphir-be.iml" filepath="$PROJECT_DIR$/.idea/saphir-be.iml" />
     </modules>
   </component>

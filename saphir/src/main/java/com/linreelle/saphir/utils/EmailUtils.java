@@ -15,8 +15,11 @@ public class EmailUtils {
     }
 
     public static String adhesionMail (String name) {
-        return "Hello " + name + ", \n\nYour adhesion request has been received with success. \n Our customer support team " +
-                "will get in touch within 24 hours. \n Thank you for choosing Saphir ASBL";
+        return "Dear " + name + ", " +
+                "\n\nYour adhesion request has been successfully. " +
+                "\n Our customer support team " +
+                "will get in touch within 24 hours to finalize your subscription. " +
+                "\n Thank you for choosing Saphir ASBL";
     }
 
 }

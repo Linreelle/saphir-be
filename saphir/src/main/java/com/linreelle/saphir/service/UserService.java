@@ -9,27 +9,24 @@ import com.linreelle.saphir.exception.UserNotFindException;
 import com.linreelle.saphir.mapper.ProfileMapper;
 import com.linreelle.saphir.mapper.UserMapper;
 import com.linreelle.saphir.model.User;
+import com.linreelle.saphir.model.services.Bundle;
+import com.linreelle.saphir.model.services.Offer;
 import com.linreelle.saphir.repository.UserRepository;
+import com.linreelle.saphir.repository.services.BundleRepository;
+import com.linreelle.saphir.repository.services.OfferRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.Base64;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -37,6 +34,8 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
+    private final BundleRepository bundleRepository;
+    private final OfferRepository offerRepository;
     private final UserDao userDao;
     private final PasswordEncoder passwordEncoder;
     private final EmailService emailService;
@@ -115,14 +114,15 @@ public class UserService implements UserDetailsService {
         }
     }
 
-    public AdhesionResponse adhesion (UUID id, AdhesionRequest request){
+    public AdhesionResponse adhesion(UUID id, AdhesionRequest request) {
         User user = userRepository.findById(id).orElseThrow();
+        Set<Bundle> bundles = new HashSet<>(bundleRepository.findAllById(request.getBundleIds()));
+        Set<Offer> offers = new HashSet<>(offerRepository.findAllById(request.getOfferIds()));
 
         if (request.getIdCardBase64() != null && !request.getIdCardBase64().isEmpty()) {
             byte[] decodedBytes = Base64.getDecoder().decode(request.getIdCardBase64());
             user.setIdCard(decodedBytes);
         }
-
 
         user.setFirstName(request.getFirstName());
         user.setLastName(request.getLastName());
@@ -133,13 +133,35 @@ public class UserService implements UserDetailsService {
         user.setIdCardNumber(request.getIdCardNumber());
         user.setAddress(request.getAddress());
         user.setHasAdhere(true);
+        user.setSubscribedBundles(bundles);
+        user.setSubscribedOffers(offers);
 
         User subscribedUser = userRepository.save(user);
 
         String name = subscribedUser.getFirstName() + " " + subscribedUser.getLastName();
-        emailService.sendAdhesionEmail(name, request.getEmail());
+
+        String selectedPackages = bundles.stream()
+                .map(Bundle::getName)
+                .collect(Collectors.joining(", "));
+
+        String selectedOffers = offers.stream()
+                .map(Offer::getName)
+                .collect(Collectors.joining(", "));
+
+        String emailBody = "Dear " + name + ",\n\n" +
+                "Your adhesion request has been received successfully.\n" +
+                "Our customer support team will contact you within 24 hours to finalize your subscription.\n\n" +
+                "📦 Packages: " + (selectedPackages.isEmpty() ? "None" : selectedPackages) + "\n" +
+                "🛎️ Services: " + (selectedOffers.isEmpty() ? "None" : selectedOffers) + "\n\n" +
+                "Thank you for choosing Saphir ASBL.";
+
+        emailService.sendAdhesionEmail(name, request.getEmail(), emailBody);
+
         return UserMapper.ToAdhesion(subscribedUser);
     }
+
+
+
 
     public ProfileDto changeProfile(String username, ChangeProfileDto dto) {
         // Find the logged-in user

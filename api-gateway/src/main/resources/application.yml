@@ -15,7 +15,8 @@ spring:
           routes:
               #Route to saphir
             - id: saphir-auth-route
-              uri: http://saphir.railway.internal:4005
+#              uri: http://saphir.railway.internal:4005
+              uri: http://saphir:4005
               predicates:
                 - Path=/auth/**
               filters:
@@ -23,7 +24,8 @@ spring:
 
               #Route to log out
             - id: saphir-auth-logout
-              uri: http://saphir.railway.internal:4005
+#              uri: http://saphir.railway.internal:4005
+              uri: http://saphir:4005
               predicates:
                 - Path=/api/logout
               filters:
@@ -32,14 +34,16 @@ spring:
 
               # Route to offers
             - id: saphir-offer-route
-              uri: http://saphir.railway.internal:4005
+#              uri: http://saphir.railway.internal:4005
+              uri: http://saphir:4005
               predicates:
                 - Path=/api/offers/**
               filters:
                 - JwtValidation
 
             - id: saphir-user-route
-              uri: http://saphir.railway.internal:4005
+#              uri: http://saphir.railway.internal:4005
+              uri: http://saphir:4005
               predicates:
                 - Path=/api/users/**
               filters:
@@ -47,7 +51,8 @@ spring:
 
 
             - id: saphir-bundle-route
-              uri: http://saphir.railway.internal:4005
+#              uri: http://saphir.railway.internal:4005
+              uri: http://saphir:4005
               predicates:
                 - Path=/api/bundles/**
               filters:
@@ -55,7 +60,8 @@ spring:
 
 
             - id: api-docs-saphir-users-route
-              uri: http://saphir.railway.internal:4005
+#              uri: http://saphir.railway.internal:4005
+              uri: http://saphir:4005
               predicates:
                 - Path=/api-docs/users
               filters:
@@ -63,14 +69,16 @@ spring:
 
 
             - id: api-docs-saphir-auth-route
-              uri: http://saphir.railway.internal:4005
+#              uri: http://saphir.railway.internal:4005
+              uri: http://saphir:4005
               predicates:
                 - Path=/api-docs/auth
               filters:
                 - RewritePath=/api-docs/auth,/v3/api-docs
 
             - id: api-docs-saphir=offers-route
-              uri: http://saphir.railway.internal:4005
+#              uri: http://saphir.railway.internal:4005
+              uri: http://saphir:4005
               predicates:
                 - Path=/api-docs/offers
               filters:

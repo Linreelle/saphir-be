@@ -32,7 +32,7 @@ public class EmailService {
         }
     }
 
-    public void sendAdhesionEmail(String name, String to) {
+    public void sendAdhesionEmail(String name, String to, String selectedPackageInfo) {
         try {
             SimpleMailMessage message = new SimpleMailMessage();
             message.setSubject("Adhesion Request");

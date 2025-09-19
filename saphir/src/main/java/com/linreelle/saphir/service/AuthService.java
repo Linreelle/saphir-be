@@ -18,6 +18,7 @@ import io.jsonwebtoken.JwtException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.mail.MailException;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -31,6 +32,7 @@ import java.io.IOException;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class AuthService {
     private final UserService userService;
     private final PasswordEncoder passwordEncoder;
@@ -45,6 +47,7 @@ public class AuthService {
 
     public Boolean verifyToken(String token) {
         Confirmation confirmation = confirmationRepository.findByToken(token);
+        log.debug("Verifying token: {}", token);
         User user = userRepository.findByEmailIgnoreCase(confirmation.getUser().getEmail());
         user.setEnabled(true);
         user.setActive(true);

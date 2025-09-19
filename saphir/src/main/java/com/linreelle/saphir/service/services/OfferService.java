@@ -1,5 +1,7 @@
 package com.linreelle.saphir.service.services;
 
+import com.linreelle.saphir.dto.services.OfferDto;
+import com.linreelle.saphir.mapper.services.OfferMapper;
 import com.linreelle.saphir.model.services.Offer;
 import com.linreelle.saphir.repository.services.OfferRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -21,8 +24,14 @@ public class OfferService {
         return offerRepository.save(offer);
     }
 
-    public List<Offer> getAllOffers() {
-        return offerRepository.findAll();
+    public List<OfferDto> getAllOffers() {
+        List<Offer> offers = offerRepository.findAll();
+        return offers.stream().map(OfferMapper::toDTO).toList();
+
+    }
+
+    public List<Offer> getOffersForBundle(Long bundleId) {
+        return offerRepository.findOffersByBundleId(bundleId);
     }
 
     public Optional<Offer> getOfferById(Long id) {

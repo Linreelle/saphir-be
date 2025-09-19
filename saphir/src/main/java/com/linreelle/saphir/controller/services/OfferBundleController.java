@@ -1,6 +1,7 @@
 package com.linreelle.saphir.controller.services;
 
 import com.linreelle.saphir.dto.services.BundleRequest;
+import com.linreelle.saphir.dto.services.OfferDto;
 import com.linreelle.saphir.model.User;
 import com.linreelle.saphir.model.services.Bundle;
 import com.linreelle.saphir.model.services.Offer;
@@ -42,8 +43,8 @@ public class OfferBundleController {
 
     @PreAuthorize("hasAnyRole('USER','MANAGER','ADMIN')")
     @GetMapping("/offers")
-    public ResponseEntity<List<Offer>> getAllOffers() {
-        List<Offer> offers = offerService.getAllOffers();
+    public ResponseEntity<List<OfferDto>> getAllOffers() {
+        List<OfferDto> offers = offerService.getAllOffers();
         return ResponseEntity.ok(offers);
     }
 
@@ -112,5 +113,16 @@ public class OfferBundleController {
         bundleService.deleteBundle(id);
         return ResponseEntity.noContent().build();
     }
+
+
+    @GetMapping("/bundles/{bundleId}/offers")
+    public ResponseEntity<List<Offer>> getOffersByBundle(@PathVariable Long bundleId) {
+        List<Offer> offers = offerService.getOffersForBundle(bundleId);
+        if (offers.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(offers);
+    }
+
 
 }

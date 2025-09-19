@@ -2,6 +2,7 @@ package com.linreelle.saphir.dto;
 
 
 import com.linreelle.saphir.model.IdType;
+import com.linreelle.saphir.model.services.Offer;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -9,6 +10,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -32,5 +35,9 @@ public class AdhesionRequest {
     private String idCardBase64;
     @NotBlank(message = "Address is required")
     private String address;
+
+    private Set<Long> bundleIds;
+    private  Set<Long> offerIds;
+
 }
 

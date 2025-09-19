@@ -98,7 +98,7 @@ public class User implements UserDetails {
     @Column(name = "is_user")
     private boolean systemUser = false;
     @Builder.Default
-    @Column(name = "hasadhere")
+    @Column(name = "has_adhere")
     private boolean hasAdhere = false;
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
