@@ -163,6 +163,7 @@ public class UserService implements UserDetailsService {
 
 
 
+
     public ProfileDto changeProfile(String username, ChangeProfileDto dto) {
         // Find the logged-in user
         User user = userRepository.findByEmail(username)
