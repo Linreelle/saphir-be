@@ -81,6 +81,8 @@ public class EmailService {
     private void sendEmail(String to, String subject, String text) {
         RestTemplate restTemplate = new RestTemplate();
 
+        System.out.println("Mailtrap API Token: " + apiToken);
+
         Map<String, Object> body = new HashMap<>();
         body.put("from", Map.of("email", fromEmail));
         body.put("to", List.of(Map.of("email", to)));
