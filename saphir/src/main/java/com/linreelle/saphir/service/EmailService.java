@@ -72,10 +72,9 @@ public class EmailService {
         sendEmail(to, subject, text);
     }
 
-    public void sendAdhesionEmail(String name, String to, String selectedPackageInfo) {
+    public void sendAdhesionEmail(String name, String to, String emailBody) {
         String subject = "Adhesion Request";
-        String text = EmailUtils.adhesionMail(name);
-        sendEmail(to, subject, text);
+        sendEmail(to, subject, emailBody);
     }
 
     private void sendEmail(String to, String subject, String text) {
