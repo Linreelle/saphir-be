@@ -2,17 +2,16 @@ package com.linreelle.saphir.service.services;
 
 import com.linreelle.saphir.dto.services.OfferDto;
 import com.linreelle.saphir.mapper.services.OfferMapper;
+import com.linreelle.saphir.model.services.Bundle;
 import com.linreelle.saphir.model.services.Offer;
 import com.linreelle.saphir.repository.services.OfferRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -27,7 +26,6 @@ public class OfferService {
     public List<OfferDto> getAllOffers() {
         List<Offer> offers = offerRepository.findAll();
         return offers.stream().map(OfferMapper::toDTO).toList();
-
     }
 
     public List<Offer> getOffersForBundle(Long bundleId) {
@@ -50,7 +48,13 @@ public class OfferService {
     }
 
     public void deleteOffer(Long id) {
-        offerRepository.deleteById(id);
+        Offer offer = offerRepository.findById(id)
+                        .orElseThrow(()-> new EntityNotFoundException("Offer not found with ID " + id));
+        for (Bundle bundle : offer.getBundles()) {
+            bundle.getOffers().remove(offer);
+        }
+        offer.getBundles().clear();
+        offerRepository.delete(offer);
     }
 
 }
