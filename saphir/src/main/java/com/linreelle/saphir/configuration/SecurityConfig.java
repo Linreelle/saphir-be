@@ -44,6 +44,7 @@ public class SecurityConfig {
                                         .requestMatchers("/users/getProfile").authenticated()
                                         .requestMatchers("/users/profile/change").authenticated()
                                         .requestMatchers("/users/adhesion/**").hasRole(USER.name())
+                                        .requestMatchers(HttpMethod.GET, "/api/bundles").hasAnyRole(ADMIN.name(),MANAGER.name(), USER.name())
                                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session-> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

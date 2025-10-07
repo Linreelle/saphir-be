@@ -83,7 +83,6 @@ public class OfferBundleController {
 
 
     @GetMapping("/bundles")
-    @PreAuthorize("hasAnyRole('USER','MANAGER','ADMIN')")
     public ResponseEntity<List<Bundle>> getAllBundles() {
         List<Bundle> bundles = bundleService.getAllBundles();
         return ResponseEntity.ok(bundles);

@@ -28,7 +28,6 @@ public class SubscriptionController {
         return ResponseEntity.ok("Subscribed to offer successfully.");
     }
 
-    // Subscribe to a bundle — userId comes from authenticated user
     @PostMapping("/bundle/{bundleId}")
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<?> subscribeToBundle(@PathVariable Long bundleId) {
@@ -36,13 +35,11 @@ public class SubscriptionController {
         subscriptionService.subscribeToBundle(userId, bundleId);
         return ResponseEntity.ok("Subscribed to bundle successfully.");
     }
-
     private UUID getAuthenticatedUserId() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null || !authentication.isAuthenticated()) {
             throw new RuntimeException("User not authenticated");
         }
-
         Object principal = authentication.getPrincipal();
         if (principal instanceof User) { // Your custom User class
             return ((User) principal).getId();
@@ -54,5 +51,4 @@ public class SubscriptionController {
     public Set<Offer> getUserOffers(User user) {
         return new HashSet<>(subscriptionService.getAllOffersForUser(user));
     }
-
 }
